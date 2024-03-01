@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDoctorQuery } from '../../../services/queryHooks/useDoctorsQuery'
+import { useDoctorQuery } from '../../../services/queryHooks'
 import Loading from '../../../components/ui/Loading'
 import DoctorCard from './DoctorCard'
 import { doc } from '../../../utils/types'
@@ -16,6 +16,7 @@ const Doctors: React.FC = () => {
           <div className="flex flex-row flex-wrap justify-center gap-5">
             {data?.data.map((doc: doc) => (
               <DoctorCard
+                key={doc.id}
                 img={doc.img}
                 docName={doc.name}
                 docSpeciality={doc.speciality}
