@@ -1,0 +1,25 @@
+{
+  "doctors": [
+    {
+      "id": 1,
+      "link": "/doctors/doctorDetails",
+      "img": "/assets/images/doctor.jpeg",
+      "name": "Ahmed Sabbah",
+      "speciality": "dentis"
+    },
+    {
+      "id": 2,
+      "link": "/doctors/doctorDetails",
+      "img": "/assets/images/doctor.jpeg",
+      "name": "Ahmed Sabbah",
+      "speciality": "dentis"
+    },
+    {
+      "id": 3,
+      "link": "/doctors/doctorDetails",
+      "img": "/assets/images/doctor.jpeg",
+      "name": "Ahmed Sabbah",
+      "speciality": "dentis"
+    }
+  ]
+}
