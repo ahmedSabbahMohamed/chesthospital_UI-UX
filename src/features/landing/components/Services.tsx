@@ -1,6 +1,6 @@
 import React from 'react'
 import Title from './Title';
-import { services } from '../../../services/data';
+import { services } from '../../../data/servicesData';
 import ServiceCard from './ServiceCard';
 
 const Services: React.FC = () => {
