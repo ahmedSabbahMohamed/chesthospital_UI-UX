@@ -1,8 +1,11 @@
+import { Route, Routes } from "react-router-dom"
+import LandingPage from "./pages/LandingPage"
+
 function App() {
   return (
-    <>
-      <h2 className="text-error">ahmed</h2>
-    </>
+    <Routes>
+      <Route path={"/"} element={<LandingPage />} />
+    </Routes>
   )
 }
 
