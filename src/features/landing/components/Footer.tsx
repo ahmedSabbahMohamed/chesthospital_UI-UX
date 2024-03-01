@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
       <nav className="grid grid-flow-col gap-4">
         {navLinks.map((link) => {
           return (
-            <a href={link.href} className="link link-hover">
+            <a key={link.href} href={link.href} className="link link-hover">
               {link.text}
             </a>
           );
