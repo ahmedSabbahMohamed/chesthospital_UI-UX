@@ -20,7 +20,7 @@ const Input: React.FC<InputProps> = ({ name, label, type, ...rest }) => {
     <div>
       <label
         htmlFor={name}
-        className={`block mb-2 text-semiDark ${hasError ? "text-red-400" : ""}`}
+        className={`block mb-2 text-semiDark ${hasError ? "text-error" : ""}`}
       >
         {hasError ? errors[name]?.toString() : label}
       </label>
