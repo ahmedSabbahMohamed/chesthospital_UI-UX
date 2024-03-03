@@ -1,3 +1,5 @@
+import React from "react";
+
 type DoctorCardProps = {
   img: any;
   docName: string;
@@ -22,4 +24,19 @@ type ServiceCardProps = {
   desc: string;
 }
 
-export type { DoctorCardProps, doc, TitleProps, ServiceCardProps }
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  name: string;
+  label: string;
+  type?: string;
+}
+
+type SubmitBtnProps = {
+  BtnTxt: string;
+  disabled: boolean;
+}
+
+type FormContainerProps = {
+  children: React.ReactNode
+}
+
+export type { DoctorCardProps, doc, TitleProps, ServiceCardProps, InputProps, SubmitBtnProps, FormContainerProps }
