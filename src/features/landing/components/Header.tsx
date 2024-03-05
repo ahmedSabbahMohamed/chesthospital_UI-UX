@@ -3,8 +3,11 @@ import Logo from "../../../components/ui/Logo";
 import { Link } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import NavLinks from "./NavLinks";
+import { useTranslation } from "react-i18next";
 
 const Header: React.FC = () => {
+  const { t } = useTranslation()
+
   return (
     <header className="shadow-lg fixed z-40 w-full bg-white">
       <div className="navbar bg-base-100 container mx-auto">
@@ -18,7 +21,7 @@ const Header: React.FC = () => {
 
         <div className="navbar-end">
           <Link to={"/login"} className="btn bg-primary text-white text-lg">
-            signin
+            {t("signin")}
           </Link>
         </div>
 

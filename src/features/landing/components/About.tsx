@@ -2,12 +2,15 @@ import React from 'react'
 import Title from './Title';
 import about from "../assets/images/about.png"
 import LearnMoreBtn from './LearnMoreBtn';
+import { useTranslation } from 'react-i18next';
 
 const About: React.FC = () => {
+  const { t } = useTranslation()
+
   return (
     <section>
       <div id="about" className="min-w-screen min-h-screen pt-8">
-        <Title firstHalf="About" secondHalf="Us" />
+        <Title firstHalf={t("about")} secondHalf={t("us")} />
 
         <div className="container mx-auto flex gap-8 flex-col lg:flex-row items-center py-5">
           {/* left */}

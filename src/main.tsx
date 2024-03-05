@@ -7,6 +7,7 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import "react-toastify/ReactToastify.css"
+import "./i18next"
 
 const queryClient = new QueryClient();
 

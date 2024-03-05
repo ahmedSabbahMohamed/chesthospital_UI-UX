@@ -1,0 +1,19 @@
+{
+  "localeSwitcher": {
+    "locale": "{locale, select, ar {Arabic} en {English} other {Unknown}}"
+  },
+  "metaData": {
+    "tittle": "Chest hospital"
+  },
+  "navbar": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "doctors": "Doctors",
+    "signin": "Sign In"
+  },
+  "hero": {
+    "heading": "Your trusted source for medical inshights and expertise!",
+    "desc": "Welcome to chest hospital where exceptional medical care meets compassionate expertise."
+  }
+}
