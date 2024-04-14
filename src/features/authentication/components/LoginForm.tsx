@@ -10,25 +10,30 @@ const LoginForm: React.FC = () => {
 
   return (
     <Formik initialValues={initialValues} validationSchema={loginSchema} onSubmit={(values) => console.log(values)}>
-      {(formikProps) => (
-        <Form className="max-w-[350px] flex flex-col gap-3">
-          <Input
-            label={t("email")}
-            name="email"
-            id="email"
-            type="email"
-            placeholder="ahmed@gamil.com"
-          />
-          <Input
-            label={t("password")}
-            name="password"
-            id="password"
-            type="password"
-            placeholder="ahme*2laSlskdk"
-          />
-          <SubmitBtn disabled={formikProps.isSubmitting} BtnTxt={t("signin")} />
-        </Form>
-      )}
+      {(formikProps) => {
+        return (
+          <Form className="max-w-[350px] flex flex-col gap-3">
+            <Input
+              label={t("email")}
+              name="email"
+              id="email"
+              type="email"
+              placeholder="ahmed@gamil.com"
+            />
+            <Input
+              label={t("password")}
+              name="password"
+              id="password"
+              type="password"
+              placeholder="ahme*2laSlskdk"
+            />
+            <SubmitBtn
+              disabled={formikProps.isSubmitting}
+              BtnTxt={t("signin")}
+            />
+          </Form>
+        );
+      }}
     </Formik>
   );
 }
