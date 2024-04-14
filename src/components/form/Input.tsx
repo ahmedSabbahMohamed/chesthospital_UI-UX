@@ -20,7 +20,7 @@ const Input: React.FC<InputProps> = ({ name, label, type, ...rest }) => {
     <div>
       <label
         htmlFor={name}
-        className={`block mb-2 text-semiDark ${hasError ? "text-error" : ""}`}
+        className={`block mb-2 ${hasError ? "text-error" : "text-semiDark"}`}
       >
         {hasError ? errors[name]?.toString() : label}
       </label>
@@ -30,7 +30,9 @@ const Input: React.FC<InputProps> = ({ name, label, type, ...rest }) => {
         name={name}
         onChange={handleChange}
         onBlur={handleBlur}
-        className={`input input-bordered w-full max-w-xs ${hasError ? "input-error" : ""}`}
+        className={`input input-bordered w-full max-w-xs ${
+          hasError ? "input-error" : ""
+        }`}
       />
     </div>
   );
