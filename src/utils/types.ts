@@ -39,4 +39,47 @@ type FormContainerProps = {
   children: React.ReactNode
 }
 
-export type { DoctorCardProps, doc, TitleProps, ServiceCardProps, InputProps, SubmitBtnProps, FormContainerProps }
+type SearchPatientFormProps = {
+  handleSubmit: any;
+  label: string;
+  BtnTxt: string;
+  disabled: boolean;
+}
+
+type sidebarProps = {
+  dir: string;
+  sidebarContent: React.ReactNode;
+}
+
+type patientInfoProps = {
+  loading: boolean;
+  error: any;
+  data: any;
+  results: React.ReactNode;
+  notFound: React.ReactNode;
+}
+
+type patientDataProps = {
+  id: string,
+  name: string,
+  phone: string,
+}
+
+type NotFoundPatientProps = {
+  message: string | undefined;
+}
+
+export type {
+  DoctorCardProps,
+  doc,
+  TitleProps,
+  ServiceCardProps,
+  InputProps,
+  SubmitBtnProps,
+  FormContainerProps,
+  SearchPatientFormProps,
+  sidebarProps,
+  patientInfoProps,
+  patientDataProps,
+  NotFoundPatientProps,
+};
