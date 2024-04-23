@@ -2,7 +2,7 @@ import React from "react";
 import { useFormikContext } from "formik";
 import { InputProps } from "../../utils/types";
 
-const Input: React.FC<InputProps> = ({ name, label, type, ...rest }) => {
+const Input: React.FC<InputProps> = ({ name, label, type = "text", ...rest }) => {
   const { errors, touched, setFieldValue, setFieldTouched } = useFormikContext<any>();
 
   const hasError = errors[name] && touched[name];
