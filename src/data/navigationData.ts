@@ -5,4 +5,9 @@ const navLinks = [
   { href: "#about", text: "about" },
 ];
 
-export { navLinks }
+const receptionNavLinks = [
+  { id: 1, href: "/", text: "بحث عن مريض" },
+  { id: 2, href: "/add-patient", text: "إضافة مريض" },
+];
+
+export { navLinks, receptionNavLinks }
