@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import patientId from "./slices/patientSlice";
 
 const store = configureStore({
   reducer: {
-    
+    id: patientId,
   },
 });
 
