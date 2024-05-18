@@ -1,12 +1,12 @@
 import { useTranslation } from "react-i18next"
-import ReceptionRoutes from "./routes/ReceptionRoutes"
+import DoctorRoutes from "./routes/DoctorRoutes"
 
 function App() {
   const { t } = useTranslation()
 
   return (
     <div dir={t("dir")}>
-      <ReceptionRoutes />
+      <DoctorRoutes />
     </div>
   )
 }
