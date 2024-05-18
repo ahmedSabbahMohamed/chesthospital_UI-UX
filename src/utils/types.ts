@@ -49,6 +49,7 @@ type SearchPatientFormProps = {
 type sidebarProps = {
   dir: string;
   sidebarContent: React.ReactNode;
+  place?: string;
 }
 
 type patientInfoProps = {
@@ -69,6 +70,11 @@ type NotFoundPatientProps = {
   message: string | undefined;
 }
 
+type ModalProps = {
+  openButton: string,
+  children: React.ReactNode,
+}
+
 export type {
   DoctorCardProps,
   doc,
@@ -82,4 +88,5 @@ export type {
   patientInfoProps,
   patientDataProps,
   NotFoundPatientProps,
+  ModalProps,
 };
