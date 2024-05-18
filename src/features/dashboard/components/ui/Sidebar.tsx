@@ -3,14 +3,14 @@ import { Outlet } from "react-router-dom";
 import { sidebarProps } from "../../../../utils/types";
 import { FaBars } from "react-icons/fa";
 
-const Sidebar: React.FC<sidebarProps> = ({ dir, sidebarContent }) => {
+const Sidebar: React.FC<sidebarProps> = ({ dir, sidebarContent, place = "ml-auto" }) => {
   return (
     <div dir={dir} className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col items-center justify-center">
         <label
           htmlFor="my-drawer-2"
-          className="btn btn-sm m-2 ml-auto drawer-button lg:hidden"
+          className={`btn btn-sm m-2 drawer-button lg:hidden ${place}`}
         >
           <FaBars color="black" />
         </label>
