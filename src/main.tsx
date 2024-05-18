@@ -9,7 +9,16 @@ import { ToastContainer } from 'react-toastify'
 import "react-toastify/ReactToastify.css"
 import "./i18next"
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: true,
+      refetchOnReconnect: false,
+      retry: false,
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
