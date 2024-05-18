@@ -10,4 +10,9 @@ const receptionNavLinks = [
   { id: 2, href: "/add-patient", text: "إضافة مريض" },
 ];
 
-export { navLinks, receptionNavLinks }
+const doctorNavLinks = [
+  { id: 1, href: "/", text: "Home" },
+  { id: 2, href: "/consultation", text: "Consultation" },
+]
+
+export { navLinks, receptionNavLinks, doctorNavLinks };
