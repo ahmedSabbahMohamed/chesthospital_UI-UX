@@ -10,7 +10,7 @@ const loginSchema = Yup.object({
     .email("invalid email address")
     .required("email is requied"),
   password: Yup.string()
-    .min(8, "password must be at least 8 characters")
+    // .min(8, "password must be at least 8 characters")
     .required("password is required"),
 });
 
