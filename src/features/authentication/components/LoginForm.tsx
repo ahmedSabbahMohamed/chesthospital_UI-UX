@@ -12,7 +12,6 @@ const LoginForm: React.FC = () => {
   const mutation = useLoginMutation();
 
   const handleSubmit = async (values: any) => {
-    console.log(values)
     try {
       mutation.mutate(values);
     } catch(err) {
