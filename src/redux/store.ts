@@ -5,8 +5,13 @@ import employeeId from "./slices/employeeSlice";
 const store = configureStore({
   reducer: {
     id: patientId,
-    employeeId
+    employeeId,
   },
+});
+
+store.subscribe(() => {
+  const state = store.getState();
+  localStorage.setItem('employeeId', state.employeeId.id)
 });
 
 export type RootState = ReturnType<typeof store.getState>;
