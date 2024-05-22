@@ -1,7 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import * as auth from "../api/login";
 import { useDispatch } from "react-redux";
-import { setEmplyeeId } from "../../redux/slices/employeeSlice";
+import { setEmployeeId } from "../../redux/slices/employeeSlice";
+import { toast } from "react-toastify";
+import { getErrorWithResponse } from "../../utils/apiError";
 
 const useLoginMutation = () => {
   const dispatch = useDispatch();
@@ -15,12 +17,13 @@ const useLoginMutation = () => {
           "specialization",
           response?.employee?.specialization
         );
-        dispatch(setEmplyeeId(response?.employee?.id));
+        dispatch(setEmployeeId(response?.employee?.id));
         window.location.pathname = "/";
       }
     },
-    onError: (error: any) => {
-      console.log("login error", error);
+    onError: (err) => {
+      const error = getErrorWithResponse(err);
+      toast.error(error?.response?.data?.message);
     },
   });
 };
