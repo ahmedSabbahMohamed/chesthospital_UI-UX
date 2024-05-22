@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 const initialValues = {
     patientId: '',
     doctorId: '',
-    medicine: '',
+    medicine: [],
 };
 
 const validationSchema = Yup.object({
