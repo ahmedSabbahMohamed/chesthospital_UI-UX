@@ -1,26 +1,37 @@
 import React from "react";
 import { ModalProps } from "../../../../utils/types";
 
-const Modal: React.FC<ModalProps> = ( { openButton, children } ) => {
-
+const Modal: React.FC<ModalProps> = ({ openButton, styles, children, id,heading }) => {
   const openModal = () => {
-    (document.getElementById("my_modal_1") as HTMLDialogElement)?.showModal();
-  }
+    (document.getElementById(id) as HTMLDialogElement)?.showModal();
+  };
+
+  const closeModal = () => {
+    (document.getElementById(id) as HTMLDialogElement)?.close();
+  };
 
   return (
     <>
-      <button className="btn" onClick={openModal}>
+      <button
+        className={`btn text-white text-bold ${styles}`}
+        onClick={openModal}
+      >
         {openButton}
       </button>
-      <dialog id="my_modal_1" className="modal px-2">
-        <div className="bg-white container rounded-md p-3 relative">
-            <h2 className="font-bold text-2xl text-center text-dark">Patient Report</h2>
-            <form method="dialog">
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                ✕
-              </button>
-            </form>
-            {children}
+      <dialog id={id} className="modal px-2">
+        <div className="bg-white rounded-md p-5 relative">
+          <h2 className="font-bold text-2xl text-center text-dark mb-9">
+            {heading}
+          </h2>
+          <form method="dialog">
+            <button
+              onClick={closeModal}
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            >
+              ✕
+            </button>
+          </form>
+          {children}
         </div>
       </dialog>
     </>
