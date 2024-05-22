@@ -7,6 +7,7 @@ const Reception: React.FC = () => {
   return (
     <Sidebar
       dir="rtl"
+      logoutText="تسجيل خروج"
       sidebarContent={receptionNavLinks.map((link) => (
         <li key={link.id}>
           <Link to={link.href} className="text-lg font-bold text-primary">
