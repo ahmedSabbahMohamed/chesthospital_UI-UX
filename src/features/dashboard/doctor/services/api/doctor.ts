@@ -5,7 +5,31 @@ const getPatientData = (patientId: string) => {
 };
 
 const addPatientReport = (report: object) => {
-  return API.post(`/api/doctor/report`, report);
+  return API.post(`/api/doctor/report`, report, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+const labRequest = (request: object) => {
+  return API.post(`/api/doctor/lab`, request, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+const radiologyRequest = (request: object) => {
+  return API.post(`/api/doctor/radiology`, request, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+const getMedicine = () => {
+  return API.get(`/api/doctor/medicine`);
 };
 
 const exitRequest = (request: object) => {
@@ -16,20 +40,20 @@ const consultationRequest = (request: object) => {
   return API.post(`/api/doctor/consultation`, request);
 };
 
-const radiologyRequest = (request: object) => {
-  return API.post(`/api/doctor/radiology`, request);
-};
-
 const medicineRequest = (request: object) => {
-  return API.post(`/api/doctor/medicine`, request);
-};
-
-const labRequest = (request: object) => {
-  return API.post(`/api/doctor/lab`, request);
+  return API.post(`/api/doctor/medicine`, request, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };
 
 const oxygenRequest = (request: object) => {
-  return API.post(`/api/doctor/oxygen`, request);
+  return API.post(`/api/doctor/oxygen`, request, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };
 
 export {
@@ -41,4 +65,5 @@ export {
   medicineRequest,
   labRequest,
   oxygenRequest,
+  getMedicine,
 };

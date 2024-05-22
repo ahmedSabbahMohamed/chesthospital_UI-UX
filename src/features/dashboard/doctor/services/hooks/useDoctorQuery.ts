@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as docotor from "../api/doctor";
 import usePatientId from "../../../../../hooks/PatientId";
+import { toast } from "react-toastify";
+import { getErrorWithResponse } from "../../../../../utils/apiError";
 
 const useGetPatientData = () => {
   const id = usePatientId();
@@ -11,13 +13,58 @@ const useGetPatientData = () => {
   });
 };
 
-const usePostPatientReport = () => {
+const usePostPatientReport = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: docotor.addPatientReport,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["patient"] });
+      (document.getElementById(id) as HTMLDialogElement)?.close();
+      toast.success("added patient report successfully");
     },
+    onError: () => {
+      (document.getElementById(id) as HTMLDialogElement)?.close();
+      toast.error("something went wrong");
+    },
+  });
+};
+
+const useLabRequest = (id: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: docotor.labRequest,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["patient"] });
+      (document.getElementById(id) as HTMLDialogElement)?.close();
+      toast.success("request sent successfully");
+    },
+    onError: () => {
+      (document.getElementById(id) as HTMLDialogElement)?.close();
+      toast.error("something went wrong");
+    },
+  });
+};
+
+const useRadiologyRequest = (id: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: docotor.radiologyRequest,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["patient"] });
+      (document.getElementById(id) as HTMLDialogElement)?.close();
+      toast.success("request sent successfully");
+    },
+    onError: () => {
+      (document.getElementById(id) as HTMLDialogElement)?.close();
+      toast.error("some thing went wrong");
+    },
+  });
+};
+
+const useGetMedicine = () => {
+  return useQuery({
+    queryKey: ["medicine"],
+    queryFn: docotor.getMedicine,
   });
 };
 
@@ -41,42 +88,36 @@ const useConsultationRequest = () => {
   });
 };
 
-const useRadiologyRequest = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: docotor.radiologyRequest,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["patient"] });
-    },
-  });
-};
-
-const useMedicineRequest = () => {
+const useMedicineRequest = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: docotor.medicineRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["patient"] });
+      (document.getElementById(id) as HTMLDialogElement)?.close();
+      toast.success("request sent successfully");
+    },
+    onError: (error) => {
+      (document.getElementById(id) as HTMLDialogElement)?.close();
+      console.log(error)
+      toast.error("something went wrong");
     },
   });
 };
 
-const useLabRequest = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: docotor.labRequest,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["patient"] });
-    },
-  });
-};
-
-const useOxygenRequest = () => {
+const useOxygenRequest = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: docotor.oxygenRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["patient"] });
+      (document.getElementById(id) as HTMLDialogElement)?.close();
+      toast.success("request sent successfully");
+    },
+    onError: (error) => {
+      const errorWithResponse = getErrorWithResponse(error);
+      (document.getElementById(id) as HTMLDialogElement)?.close();
+      toast.error(errorWithResponse?.response?.data?.message)
     },
   });
 };
@@ -90,4 +131,5 @@ export {
   useMedicineRequest,
   useLabRequest,
   useOxygenRequest,
+  useGetMedicine,
 };
