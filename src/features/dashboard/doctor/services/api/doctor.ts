@@ -37,7 +37,11 @@ const exitRequest = (request: object) => {
 };
 
 const consultationRequest = (request: object) => {
-  return API.post(`/api/doctor/consultation`, request);
+  return API.post(`/api/doctor/consultation`, request, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };
 
 const medicineRequest = (request: object) => {

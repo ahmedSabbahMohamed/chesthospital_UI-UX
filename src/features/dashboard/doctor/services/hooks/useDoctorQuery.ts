@@ -79,11 +79,14 @@ const useExitRequest = () => {
 };
 
 const useConsultationRequest = () => {
-  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: docotor.consultationRequest,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["patient"] });
+      toast.success("request sent successfully");
+    },
+    onError: (err) => {
+      const error = getErrorWithResponse(err);
+      toast.error(error?.response?.data?.message);
     },
   });
 };
