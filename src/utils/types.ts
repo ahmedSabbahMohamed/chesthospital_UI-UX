@@ -50,6 +50,7 @@ type sidebarProps = {
   dir: string;
   sidebarContent: React.ReactNode;
   place?: string;
+  logoutText?: string;
 }
 
 type patientInfoProps = {
@@ -72,8 +73,34 @@ type NotFoundPatientProps = {
 
 type ModalProps = {
   openButton: string,
+  styles: string,
   children: React.ReactNode,
+  id: string,
+  heading: string,
 }
+
+type MedicalRecordProps = {
+  patientName: string,
+  reports: [],
+  labs: [],
+  radiologies: [],
+}
+
+type idProps = {
+  id: string,
+}
+
+type OptionType = {
+  name: string;
+  id: string | number;
+}
+
+type SelectInputProps = {
+  name: string;
+  options: OptionType[];
+  isMulti?: boolean;
+}
+
 
 export type {
   DoctorCardProps,
@@ -89,4 +116,8 @@ export type {
   patientDataProps,
   NotFoundPatientProps,
   ModalProps,
+  MedicalRecordProps,
+  idProps,
+  OptionType,
+  SelectInputProps,
 };
