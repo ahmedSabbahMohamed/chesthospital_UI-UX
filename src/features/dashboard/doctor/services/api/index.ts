@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_API = `http://localhost:5000`;
+const BASE_API = `https://chesthospital-backend.onrender.com`;
 
 const getToken = () => {
   const token = localStorage.getItem("token");
