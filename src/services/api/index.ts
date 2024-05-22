@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASI_API = `http://localhost:5000`;
+const BASE_API = `http://localhost:5000`;
 
 const getToken = () => {
   const token = localStorage.getItem("token");
@@ -13,7 +13,6 @@ const getHeaders = () => {
   if (token) {
     return {
       Authorization: token,
-
       "Content-Type": "multipart/form-data",
     };
   } else {
@@ -24,8 +23,8 @@ const getHeaders = () => {
 };
 
 const API = axios.create({
-    baseURL: BASI_API,
-    headers: getHeaders(),
+  baseURL: BASE_API,
+  headers: getHeaders(),
 });
 
 export { API };
