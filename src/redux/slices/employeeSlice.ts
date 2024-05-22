@@ -1,22 +1,25 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface emplyeeId {
+interface EmployeeIdState {
   id: string;
 }
 
-const initialState: emplyeeId = {
-  id: "",
+const storedEmployeeId = localStorage.getItem("employeeId") || "";
+
+const initialState: EmployeeIdState = {
+  id: storedEmployeeId,
 };
 
-const emplyeeIdSlice = createSlice({
-  name: "id",
+const employeeIdSlice = createSlice({
+  name: "employeeId",
   initialState,
   reducers: {
-    setEmplyeeId: (state, action: PayloadAction<string>) => {
+    setEmployeeId: (state, action: PayloadAction<string>) => {
       state.id = action.payload;
+      localStorage.setItem("employeeId", action.payload);
     },
   },
 });
 
-export const { setEmplyeeId } = emplyeeIdSlice.actions;
-export default emplyeeIdSlice.reducer;
+export const { setEmployeeId } = employeeIdSlice.actions;
+export default employeeIdSlice.reducer;
