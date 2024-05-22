@@ -5,10 +5,12 @@ import Loading from "../../../../components/ui/Loading";
 import { useGetPatientData } from "../services/hooks/useDoctorQuery";
 import { getErrorWithResponse } from "../../../../utils/apiError";
 import MedicalRecord from "../../components/ui/MedicalRecord";
+import Modal from "../../components/ui/Modal";
+import { DoctorReport, LabRequest, MedicineRequest, OxygenRequest, RadiologyRequest } from "../../index";
 
 const SearchPatient: React.FC = () => {
   const { data, refetch, error, isLoading } = useGetPatientData();
-
+  
   const handleSubmit = async () => {
     try {
       await refetch();
@@ -17,11 +19,44 @@ const SearchPatient: React.FC = () => {
     }
   };
 
+  const requests = [
+    {
+      id: 1,
+      btnTxt: "Add Report",
+      btnColor: "btn-neutral",
+      component: <DoctorReport id="" />,
+    },
+    {
+      id: 2,
+      btnTxt: "Lab Request",
+      btnColor: "bg-primary",
+      component: <LabRequest id="" />,
+    },
+    {
+      id: 3,
+      btnTxt: "Medicine Request",
+      btnColor: "btn-warning",
+      component: <MedicineRequest id="" />,
+    },
+    {
+      id: 4,
+      btnTxt: "Oxygen Request",
+      btnColor: "btn-error",
+      component: <OxygenRequest />,
+    },
+    {
+      id: 5,
+      btnTxt: "Radiology Request",
+      btnColor: "bg-semiDark",
+      component: <RadiologyRequest id="" />,
+    },
+  ];
+
   const errorWithResponse = getErrorWithResponse(error);
-  // const patientData = data?.data?.data;
+  const patientData = data?.data?.data;
 
   return (
-    <div className="flex flex-col items-center justify-center w-full">
+    <div className="flex flex-col items-center justify-center w-full py-5">
       <SearchPatientForm
         BtnTxt="Search"
         label="Patient ID"
@@ -44,23 +79,26 @@ const SearchPatient: React.FC = () => {
           </Case>
           <Case condition={data && data?.data?.status === "success"}>
             <div className="w-full">
-              <MedicalRecord />
+              <MedicalRecord
+                patientName={patientData?.patient.name}
+                reports={patientData?.reports}
+                labs={patientData?.labs}
+                radiologies={patientData?.radiologies}
+              />
               <div className="flex flex-wrap items-center justify-star t gap-2 my-4 px-2">
-                <button className="btn btn-neutral text-white text-bold">
-                  Add Report
-                </button>
-                <button className="btn bg-primary text-white text-bold">
-                  Lab Request
-                </button>
-                <button className="btn btn-warning text-white text-bold">
-                  Medicine Request
-                </button>
-                <button className="btn btn-error text-white text-bold">
-                  OxygenRequest
-                </button>
-                <button className="btn bg-semiDark text-white text-bold">
-                  Radiology Request
-                </button>
+                {requests?.map((request) => {
+                  return (
+                    <Modal
+                      key={request.id}
+                      id={`modal-${request.id}`}
+                      heading={request.btnTxt}
+                      openButton={request.btnTxt}
+                      styles={request.btnColor}
+                    >
+                      {React.cloneElement(request.component, {id: `modal-${request.id}`})}
+                    </Modal>
+                  );
+                })}
               </div>
             </div>
           </Case>
