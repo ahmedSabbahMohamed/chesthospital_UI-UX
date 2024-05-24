@@ -101,6 +101,11 @@ type SelectInputProps = {
   isMulti?: boolean;
 }
 
+type LoginFormValues = {
+  email: string;
+  password: string;
+}
+
 
 export type {
   DoctorCardProps,
@@ -120,4 +125,5 @@ export type {
   idProps,
   OptionType,
   SelectInputProps,
+  LoginFormValues,
 };
