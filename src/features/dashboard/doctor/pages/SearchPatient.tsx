@@ -42,7 +42,7 @@ const SearchPatient: React.FC = () => {
       id: 4,
       btnTxt: "Oxygen Request",
       btnColor: "btn-error",
-      component: <OxygenRequest />,
+      component: <OxygenRequest id="" />,
     },
     {
       id: 5,

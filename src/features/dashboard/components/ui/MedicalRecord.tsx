@@ -6,7 +6,7 @@ import noData from "../../../../assets/images/no-data.gif";
 const MedicalRecord: React.FC<MedicalRecordProps> = ({
   patientName,
   reports,
-  labs,
+  // labs,
   radiologies,
 }) => {
   const showAllReports = (key: string, value: string) => {
@@ -85,7 +85,7 @@ const MedicalRecord: React.FC<MedicalRecordProps> = ({
         >
           <div className="flex">
             <Switch>
-              <Case condition={labs.length > 0}>{labs?.map((lab) => "")}</Case>
+              {/* <Case condition={labs.length > 0}>{labs?.map((lab) => "")}</Case> */}
               {noDataAvailable}
             </Switch>
           </div>
@@ -103,7 +103,8 @@ const MedicalRecord: React.FC<MedicalRecordProps> = ({
         >
           <Switch>
             <Case condition={radiologies.length > 0}>
-              {radiologies.map((radiology) => "")}
+              {/* {radiologies.map((radiology) => "")} */}
+
             </Case>
             {noDataAvailable}
           </Switch>
