@@ -1,7 +1,7 @@
 import React from "react";
 import Doctor from "../pages/Doctor";
 import { useRoutes } from "react-router-dom";
-import { SearchPatient, Consultation } from "../features/dashboard/doctor";
+import { SearchPatient } from "../features/dashboard/doctor";
 import NotFoundPage from "../components/ui/NotFoundPage";
 
 const DoctorRoutes: React.FC = () => {
@@ -12,7 +12,6 @@ const DoctorRoutes: React.FC = () => {
       element: <Doctor />,
       children: [
         { index: true, element: <SearchPatient /> },
-        { path: "consultation", element: <Consultation /> },
       ],
     },
   ];

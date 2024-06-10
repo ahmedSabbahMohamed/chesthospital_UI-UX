@@ -1,5 +1,5 @@
 import React from "react";
-import { MedicalRecordProps } from "../../../../utils/types";
+import { MedicalRecordProps } from "../../utils/types";
 import { Case, Default, Switch } from "react-if";
 import noData from "../../../../assets/images/no-data.gif";
 

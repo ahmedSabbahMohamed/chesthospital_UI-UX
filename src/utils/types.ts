@@ -39,20 +39,6 @@ type FormContainerProps = {
   children: React.ReactNode
 }
 
-type SearchPatientFormProps = {
-  handleSubmit: any;
-  label: string;
-  BtnTxt: string;
-  disabled: boolean;
-}
-
-type sidebarProps = {
-  dir: string;
-  sidebarContent: React.ReactNode;
-  place?: string;
-  logoutText?: string;
-}
-
 type patientInfoProps = {
   loading: boolean;
   error: any;
@@ -61,41 +47,13 @@ type patientInfoProps = {
   notFound: React.ReactNode;
 }
 
-type patientDataProps = {
-  id: string,
-  name: string,
-  phone: string,
-}
-
-type NotFoundPatientProps = {
-  message: string | undefined;
-}
-
-type ModalProps = {
-  openButton: string,
-  styles: string,
-  children: React.ReactNode,
-  id: string,
-  heading: string,
-}
-
-type MedicalRecordProps = {
-  patientName: string,
-  reports: [],
-  labs: [],
-  radiologies: [],
-}
-
-type idProps = {
-  id: string,
-}
-
 type OptionType = {
   name: string;
   id: string | number;
 }
 
 type SelectInputProps = {
+  label: string;
   name: string;
   options: OptionType[];
   isMulti?: boolean;
@@ -115,14 +73,7 @@ export type {
   InputProps,
   SubmitBtnProps,
   FormContainerProps,
-  SearchPatientFormProps,
-  sidebarProps,
   patientInfoProps,
-  patientDataProps,
-  NotFoundPatientProps,
-  ModalProps,
-  MedicalRecordProps,
-  idProps,
   OptionType,
   SelectInputProps,
   LoginFormValues,

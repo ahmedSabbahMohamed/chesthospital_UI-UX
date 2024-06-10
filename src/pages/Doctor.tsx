@@ -1,21 +1,23 @@
 import React from "react";
-import { Sidebar } from "../features/dashboard";
-import { doctorNavLinks } from "../data/navigationData";
-import { Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import Logo from "../components/ui/Logo";
+import Logout from "../components/ui/Logout";
 
 const Doctor: React.FC = () => {
   return (
-    <Sidebar
-      dir="ltr"
-      place="mr-auto"
-      sidebarContent={doctorNavLinks.map((link) => (
-        <li key={link.id}>
-          <Link to={link.href} className="text-lg font-bold text-primary">
-            {link.text}
-          </Link>
-        </li>
-      ))}
-    />
+    <div>
+      <div className="navbar bg-base-100">
+        <div className="flex-1">
+          <Logo />
+        </div>
+        <div className="flex-none">
+          <Logout />
+        </div>
+      </div>
+      <div className="w-full min-h-screen bg-blue-50 flex items-center justify-center">
+        <Outlet />
+      </div>
+    </div>
   );
 };
 

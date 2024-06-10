@@ -1,19 +1,16 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { sidebarProps } from "../../../../utils/types";
+import { SidebarProps } from "../../utils/types";
 import { FaBars } from "react-icons/fa";
 import { AiOutlineLogout } from "react-icons/ai";
+import { logout } from "../../../../utils/helpers";
 
-const Sidebar: React.FC<sidebarProps> = ({
+const Sidebar: React.FC<SidebarProps> = ({
   dir,
   sidebarContent,
   place = "ml-auto",
   logoutText = "Logout"
 }) => {
-  const logout = () => {
-    localStorage.clear();
-    window.location.pathname = "/";
-  };
 
   return (
     <div dir={dir} className="drawer lg:drawer-open">
@@ -40,7 +37,10 @@ const Sidebar: React.FC<sidebarProps> = ({
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
           {/* Sidebar content here */}
           {sidebarContent}
-          <li onClick={logout} className="text-error text-lg font-bold flex flex-row items-center gap-2 hover:bg-error hover:text-light hover:transition-ease cursor-pointer px-5 py-2 rounded-lg">
+          <li
+            onClick={logout}
+            className="text-error text-lg font-bold flex flex-row items-center gap-2 hover:bg-error hover:text-light hover:transition-ease cursor-pointer px-5 py-2 rounded-lg"
+          >
             <span className="p-0 hover:bg-transparent">{logoutText}</span>
             <span className="p-0 hover:bg-transparent">
               <AiOutlineLogout />

@@ -1,22 +1,22 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import * as docotor from "../api/doctor";
-import usePatientId from "../../../../../hooks/PatientId";
+import usePatientId from "../../../../hooks/PatientId";
+import * as SERVICES from "./doctorServices";
 import { toast } from "react-toastify";
-import { getErrorWithResponse } from "../../../../../utils/apiError";
+import { getErrorWithResponse } from "../../../../utils/apiError";
 
-const useGetPatientData = () => {
+const useGetReports = () => {
   const id = usePatientId();
   return useQuery({
     queryKey: ["patient"],
-    queryFn: () => docotor.getPatientData(id),
+    queryFn: () => SERVICES.getReports(id),
     enabled: false,
   });
 };
 
-const usePostPatientReport = (id: string) => {
+const usePostReport = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: docotor.addPatientReport,
+    mutationFn: SERVICES.addReport,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["patient"] });
       (document.getElementById(id) as HTMLDialogElement)?.close();
@@ -32,7 +32,7 @@ const usePostPatientReport = (id: string) => {
 const useLabRequest = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: docotor.labRequest,
+    mutationFn: SERVICES.labRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["patient"] });
       (document.getElementById(id) as HTMLDialogElement)?.close();
@@ -48,7 +48,7 @@ const useLabRequest = (id: string) => {
 const useRadiologyRequest = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: docotor.radiologyRequest,
+    mutationFn: SERVICES.radiologyRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["patient"] });
       (document.getElementById(id) as HTMLDialogElement)?.close();
@@ -64,37 +64,14 @@ const useRadiologyRequest = (id: string) => {
 const useGetMedicine = () => {
   return useQuery({
     queryKey: ["medicine"],
-    queryFn: docotor.getMedicine,
-  });
-};
-
-const useExitRequest = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: docotor.exitRequest,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["patient"] });
-    },
-  });
-};
-
-const useConsultationRequest = () => {
-  return useMutation({
-    mutationFn: docotor.consultationRequest,
-    onSuccess: () => {
-      toast.success("request sent successfully");
-    },
-    onError: (err) => {
-      const error = getErrorWithResponse(err);
-      toast.error(error?.response?.data?.message);
-    },
+    queryFn: SERVICES.getMedicine,
   });
 };
 
 const useMedicineRequest = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: docotor.medicineRequest,
+    mutationFn: SERVICES.medicineRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["patient"] });
       (document.getElementById(id) as HTMLDialogElement)?.close();
@@ -102,7 +79,7 @@ const useMedicineRequest = (id: string) => {
     },
     onError: (error) => {
       (document.getElementById(id) as HTMLDialogElement)?.close();
-      console.log(error)
+      console.log(error);
       toast.error("something went wrong");
     },
   });
@@ -111,7 +88,7 @@ const useMedicineRequest = (id: string) => {
 const useOxygenRequest = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: docotor.oxygenRequest,
+    mutationFn: SERVICES.oxygenRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["patient"] });
       (document.getElementById(id) as HTMLDialogElement)?.close();
@@ -120,19 +97,44 @@ const useOxygenRequest = (id: string) => {
     onError: (error) => {
       const errorWithResponse = getErrorWithResponse(error);
       (document.getElementById(id) as HTMLDialogElement)?.close();
-      toast.error(errorWithResponse?.response?.data?.message)
+      toast.error(errorWithResponse?.response?.data?.message);
+    },
+  });
+};
+
+const useExitRequest = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: SERVICES.exitRequest,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["patient"] });
+    },
+  });
+};
+
+const useConsultationRequest = (id: string) => {
+  return useMutation({
+    mutationFn: SERVICES.consultationRequest,
+    onSuccess: () => {
+      (document.getElementById(id) as HTMLDialogElement)?.close();
+      toast.success("request sent successfully");
+    },
+    onError: (err) => {
+      const error = getErrorWithResponse(err);
+      (document.getElementById(id) as HTMLDialogElement)?.close();
+      toast.error(error?.response?.data?.message);
     },
   });
 };
 
 export {
-  useGetPatientData,
-  useConsultationRequest,
-  usePostPatientReport,
-  useExitRequest,
-  useRadiologyRequest,
-  useMedicineRequest,
+  useGetReports,
+  usePostReport,
   useLabRequest,
-  useOxygenRequest,
+  useRadiologyRequest,
   useGetMedicine,
+  useMedicineRequest,
+  useOxygenRequest,
+  useExitRequest,
+  useConsultationRequest,
 };

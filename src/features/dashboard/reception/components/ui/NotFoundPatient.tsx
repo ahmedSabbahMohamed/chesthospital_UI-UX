@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { NotFoundPatientProps } from "../../../../../utils/types";
+import { NotFoundPatientProps } from "../../utils/types";
 
 const NotFoundPatient: React.FC<NotFoundPatientProps> = ({ message }) => {
   return (

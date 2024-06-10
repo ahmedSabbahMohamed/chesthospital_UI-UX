@@ -4,26 +4,28 @@ import SearchPatientForm from "../../components/form/SearchPatientForm";
 import NotFoundPatient from "../components/ui/NotFoundPatient";
 import PatientData from "../components/ui/PatientData";
 import Loading from "../../../../components/ui/Loading";
-import { useGetPatientData } from "../../../../services/queryHooks/useReceptionQuery";
 import { getErrorWithResponse } from "../../../../utils/apiError";
+import { useGetPatient } from "../services/receptionQueries";
+import { toast } from "react-toastify";
 
 const SearchPatient: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const { data, refetch, error } = useGetPatientData();
+  const { data, refetch, error } = useGetPatient();
 
   const handleSubmit = async () => {
     try {
       setLoading(true);
       await refetch();
     } catch (err) {
-      console.log("Error while searching for patient: ", err);
+      toast.error("Error when get patient" || err)
     } finally {
       setLoading(false);
     }
   };
 
   const errorWithResponse = getErrorWithResponse(error);
-  const patientData = data?.data?.data;
+  const patientData = data?.data?.data.patient;
+  console.log(patientData)
 
   return (
     <div className="flex flex-col items-center justify-center">

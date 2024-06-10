@@ -1,7 +1,7 @@
 import React from "react";
-import { patientDataProps } from "../../../../../utils/types";
+import { PatientDataProps } from "../../utils/types";
 
-const PatientData: React.FC<patientDataProps> = ({ id, name, phone }) => {
+const PatientData: React.FC<PatientDataProps> = ({ id, name, phone }) => {
   return (
     <div className="bg-white p-5 mx-2 shadow-lg rounded-lg">
       <h1 className="text-2xl text-center font-bold mb-3">Patient Data</h1>

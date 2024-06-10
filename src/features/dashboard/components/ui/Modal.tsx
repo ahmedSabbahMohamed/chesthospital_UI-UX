@@ -1,5 +1,5 @@
 import React from "react";
-import { ModalProps } from "../../../../utils/types";
+import { ModalProps } from "../../utils/types";
 
 const Modal: React.FC<ModalProps> = ({ openButton, styles, children, id,heading }) => {
   const openModal = () => {
@@ -18,9 +18,9 @@ const Modal: React.FC<ModalProps> = ({ openButton, styles, children, id,heading 
       >
         {openButton}
       </button>
-      <dialog id={id} className="modal px-2">
+      <dialog id={id} className="modal p-2 overflow-auto">
         <div className="bg-white rounded-md p-5 relative">
-          <h2 className="font-bold text-2xl text-center text-dark mb-9">
+          <h2 className="font-bold text-2xl text-center text-dark my-6">
             {heading}
           </h2>
           <form method="dialog">

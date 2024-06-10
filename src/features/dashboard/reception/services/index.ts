@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_API = `https://chesthospital-backend.onrender.com`;
+const BASE_API = `https://chesthospital-backend.onrender.com/api/reception`;
 
 const getToken = () => {
   const token = localStorage.getItem("token");
@@ -23,8 +23,8 @@ const getHeaders = () => {
 };
 
 const API = axios.create({
-    baseURL: BASE_API,
-    headers: getHeaders(),
+  baseURL: BASE_API,
+  headers: getHeaders(),
 });
 
 export { API };

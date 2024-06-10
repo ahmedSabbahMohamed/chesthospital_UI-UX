@@ -1,31 +1,40 @@
 import React from "react";
-import Input from "../../../../components/form/Input";
 import { Form, Formik } from "formik";
+import Input from "../../../../components/form/Input";
+import SubmitBtn from "../../../../components/form/SubmitBtn";
 import {
   initialValues,
   validationSchema,
 } from "../../../../schemas/radiologyRequestSchema";
-import SubmitBtn from "../../../../components/form/SubmitBtn";
 import usePatientId from "../../../../hooks/PatientId";
 import useEmployeeId from "../../../../hooks/EmployeeId";
-import { useRadiologyRequest } from "../../doctor/services/hooks/useDoctorQuery";
-import { idProps } from "../../../../utils/types";
+import { useRadiologyRequest } from "../../doctor/services/doctorQueries";
+import { idProps } from "../../utils/types";
 import { toast } from "react-toastify";
+import { getErrorWithResponse } from "../../../../utils/apiError";
 
-const RadiologyRequest: React.FC<idProps> = ( { id } ) => {
-
+const RadiologyRequest: React.FC<idProps> = ({ id }) => {
   const patientId = usePatientId();
   const doctorId = useEmployeeId();
+  const mutation = useRadiologyRequest(id);
 
-  const mutation = useRadiologyRequest(id)
+  const handleSubmit = async (
+    values: typeof initialValues,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    const requestValues = {
+      ...values,
+      patientId: parseInt(patientId),
+      doctorId: parseInt(doctorId),
+    };
 
-  const handleSubmit = async (values: any) => {
-    values.patientId = parseInt(patientId);
-    values.doctorId = parseInt(doctorId);
     try {
-      mutation.mutate(values);
-    } catch(err: any) {
-      toast.error(err);
+      await mutation.mutateAsync(requestValues);
+    } catch (err) {
+      const error = getErrorWithResponse(err);
+      toast.error(error?.response?.data?.message);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -36,11 +45,11 @@ const RadiologyRequest: React.FC<idProps> = ( { id } ) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {(formikProps) => (
-          <Form className="flex items-end justify-center gap-2 flex-wrap">
+        {({ isSubmitting }) => (
+          <Form className="flex flex-equal gap-2 items-end justify-center flex-col sm:flex-row">
             <Input name="name" label="Radiology Name:" />
             <Input name="description" label="Description" />
-            <SubmitBtn BtnTxt="Send Request" disabled={formikProps.isSubmitting} />
+            <SubmitBtn BtnTxt="Send Request" disabled={isSubmitting} />
           </Form>
         )}
       </Formik>

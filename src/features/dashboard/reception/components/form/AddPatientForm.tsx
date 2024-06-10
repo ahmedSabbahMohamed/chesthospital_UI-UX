@@ -1,42 +1,35 @@
-import React, { useState } from 'react'
-import { Form, Formik } from 'formik';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import Input from '../../../../../components/form/Input';
-import SubmitBtn from '../../../../../components/form/SubmitBtn';
-import { usePostPatientData } from '../../../../../services/queryHooks/useReceptionQuery';
-import { getErrorWithResponse } from '../../../../../utils/apiError';
-import { initialValues, validationSchema } from '../../../../../schemas/addPatientValidationSchema';
-import Loading from '../../../../../components/ui/Loading';
+import React, { useState } from "react";
+import { Form, Formik, FormikHelpers } from "formik";
+import Input from "../../../../../components/form/Input";
+import SubmitBtn from "../../../../../components/form/SubmitBtn";
+import {
+  initialValues,
+  validationSchema,
+} from "../../../../../schemas/addPatientValidationSchema";
+import Loading from "../../../../../components/ui/Loading";
+import { usePostPatient } from "../../services/receptionQueries";
+import { PatientValues } from "../../utils/types";
 
 const AddPatientForm: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+  const { mutateAsync } = usePostPatient();
 
-  const [loading, setLoading] = useState(false)
-  const { mutate, error, isSuccess } = usePostPatientData()
-  const errorWithResponse = getErrorWithResponse(error)
-  const navigate = useNavigate()
-
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (
+    values: PatientValues,
+    { setSubmitting }: FormikHelpers<PatientValues>
+  ) => {
+    setLoading(true);
     try {
-      setLoading(true)
-      await mutate(values)
+      await mutateAsync(values);
     } catch (error) {
-      console.log(error)
+      console.log("Failed to add patient file");
     } finally {
-      setLoading(false)
+      setLoading(false);
+      setSubmitting(false);
     }
-  }
+  };
 
-  if (isSuccess) {
-    toast.success("Created Patient File");
-    navigate("/")
-    
-  }
-  if (error) {
-    toast.error(
-      errorWithResponse?.response?.data?.message
-    );
-  }
+  console.log("loading", loading)
 
   return (
     <>
@@ -45,43 +38,40 @@ const AddPatientForm: React.FC = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        <Form
-          className={`flex flex-row flex-wrap items-center justify-center gap-4 ${
-            loading ? "cursor-wait" : "cursor-auto"
-          }`}
-        >
-          <Input
-            label="اسم المريض"
-            name="name"
-            placeholder="e.g. Ahmed Sabbah Mohamed"
-          />
-          <Input
-            label="الرقم القومي"
-            name="id"
-            placeholder="e.g. 12345678934567"
-          />
-          <Input
-            label="رقم التليفون"
-            name="phone"
-            placeholder="e.g.01557551293"
-          />
-          <Input
-            label="عنوان البريد الإلكتروني"
-            name="email"
-            type="email"
-            placeholder="e.g.example@gmail.com"
-          />
-          <Input
-            label="تاريخ الميلاد"
-            name="dateOfBirth"
-            type="date"
-            placeholder="12/31/1990"
-          />
-          <Input label="العنوان" name="address" placeholder="" />
-          <SubmitBtn BtnTxt="إضافة المريض" disabled={loading} />
-        </Form>
+        {({ isSubmitting }) => (
+          <Form
+            className={`flex sm:flex-row flex-wrap items-end justify-center gap-4`}
+          >
+            <Input
+              label="اسم المريض"
+              name="name"
+              placeholder="e.g. Ahmed Sabbah Mohamed"
+            />
+            <Input
+              label="الرقم القومي"
+              name="id"
+              placeholder="e.g. 12345678934567"
+            />
+            <Input
+              label="رقم التليفون"
+              name="phone"
+              placeholder="e.g.01557551293"
+            />
+            <Input
+              label="تاريخ الميلاد"
+              name="dateOfBirth"
+              type="date"
+              placeholder="12/31/1990"
+            />
+            <Input label="العنوان" name="address" placeholder="" />
+            <SubmitBtn
+              BtnTxt="إضافة المريض"
+              disabled={loading || isSubmitting}
+            />
+          </Form>
+        )}
       </Formik>
-      
+
       {loading && (
         <div className="w-screen h-screen bg-[#caccce9c] z-50 fixed top-0 left-0 flex justify-center items-center">
           <Loading />
@@ -89,6 +79,6 @@ const AddPatientForm: React.FC = () => {
       )}
     </>
   );
-}
+};
 
 export default AddPatientForm;

@@ -4,6 +4,7 @@ import ReactSelect, { MultiValue, SingleValue } from "react-select";
 import { SelectInputProps } from "../../utils/types";
 
 const SelectInput: React.FC<SelectInputProps> = ({
+  label,
   name,
   options,
   isMulti = true,
@@ -58,16 +59,23 @@ const SelectInput: React.FC<SelectInputProps> = ({
   }, [finalOptions, values, name, isMulti]);
 
   return (
-    <ReactSelect
-      className="w-full max-w-xs"
-      options={finalOptions}
-      name={name}
-      onChange={handleChange}
-      isMulti={isMulti}
-      isClearable
-      isSearchable
-      value={selectedValue}
-    />
+    <div className="w-full flex items-center justify-center">
+      <div className="w-full max-w-xs">
+        <label htmlFor={name} className={`block mb-2 ${"text-semiDark"}`}>
+          {label}
+        </label>
+        <ReactSelect
+          className="w-full max-w-xs"
+          options={finalOptions}
+          name={name}
+          onChange={handleChange}
+          isMulti={isMulti}
+          isClearable
+          isSearchable
+          value={selectedValue}
+        />
+      </div>
+    </div>
   );
 };
 

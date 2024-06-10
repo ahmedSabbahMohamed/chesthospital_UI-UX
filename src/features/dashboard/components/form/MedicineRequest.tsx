@@ -1,53 +1,113 @@
+import React, { useEffect, useState } from "react";
 import { Form, Formik } from "formik";
-import React from "react";
+import SelectInput from "../../../../components/form/SelectInput";
+import SubmitBtn from "../../../../components/form/SubmitBtn";
 import {
   initialValues,
   validationSchema,
 } from "../../../../schemas/medicineRequestSchema";
-import SubmitBtn from "../../../../components/form/SubmitBtn";
-import SelectInput from "../../../../components/form/SelectInput";
-import { useGetMedicine, useMedicineRequest } from "../../doctor/services/hooks/useDoctorQuery";
 import usePatientId from "../../../../hooks/PatientId";
 import useEmployeeId from "../../../../hooks/EmployeeId";
-import { idProps } from "../../../../utils/types";
+import {
+  useGetMedicine,
+  useMedicineRequest,
+} from "../../doctor/services/doctorQueries";
+import { idProps } from "../../utils/types";
 import { toast } from "react-toastify";
+import { getErrorWithResponse } from "../../../../utils/apiError";
+import Input from "../../../../components/form/Input";
 
 const MedicineRequest: React.FC<idProps> = ({ id }) => {
-  const { data } = useGetMedicine();
-  const mutation = useMedicineRequest(id);
+  const [medicine, setMedicine] = useState([]);
   const patientId = usePatientId();
   const doctorId = useEmployeeId();
+  const { data } = useGetMedicine();
+  const mutation = useMedicineRequest(id);
 
-  const handleSubmit = async (values: any) => {
-    values.patientId = parseInt(patientId);
-    values.doctorId = parseInt(doctorId);
+  const handleSubmit = async (
+    values: typeof initialValues,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    const requestValues = {
+      ...values,
+      patientId: parseInt(patientId),
+      doctorId: parseInt(doctorId),
+    };
     try {
-      mutation.mutate(values);
-    } catch(err: any) {
-      toast.error(err);
+      await mutation.mutateAsync(requestValues);
+    } catch (err) {
+      const error = getErrorWithResponse(err);
+      toast.error(error?.response?.data?.message);
+    } finally {
+      setSubmitting(false);
     }
   };
 
+  const names = medicine
+    .map((name) => {
+      const matchedObject = data?.data?.data.find(
+        (obj: any) => obj.id === name
+      );
+      return matchedObject ? matchedObject.name : null;
+    })
+    .filter((name) => name !== null);
+
   return (
-    <div>
+    <div className="flex items-center flex-col">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {(formikProps) => (
-          <Form className="flex items-end justify-center gap-2 flex-wrap">
-            <SelectInput
-              options={data?.data.data || []}
-              name="medicine"
-              isMulti={true}
-            />
-            <SubmitBtn
-              BtnTxt="Send Request"
-              disabled={formikProps.isSubmitting}
-            />
-          </Form>
-        )}
+        {({ isSubmitting, values }) => {
+          useEffect(() => {
+            setMedicine(values?.medicine);
+          }, [values.medicine]);
+          console.log(values);
+          return (
+            <Form className="flex flex-equal gap-2 items-center justify-center flex-col">
+              <SelectInput
+                label="Medicine"
+                options={data?.data.data || []}
+                name="medicine"
+                isMulti={true}
+              />
+
+              {medicine.length >= 1 && (
+                <div className="overflow-x-auto">
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Medicine</th>
+                        <th>one</th>
+                        <th>two</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {names.map((name, index) => (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>{name}</td>
+                          <td>
+                            <Input label="" name={`${name}-one`} />
+                          </td>
+                          <td>
+                            <Input label="" name={`${name}-two`} />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              {medicine.length >= 1 && (
+                <SubmitBtn BtnTxt="Send Request" disabled={isSubmitting} />
+              )}
+            </Form>
+          );
+        }}
       </Formik>
     </div>
   );

@@ -10,9 +10,25 @@ export default {
         light: "#E3F6F5",
         primary: "#0B8FAC",
       },
+      display: ["group-hover"],
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [
+    require("daisyui"),
+    function ({ addUtilities }) {
+      addUtilities(
+        {
+          ".flex-equal > *": {
+            flex: "1 1 0%",
+          },
+          ".sm\\:flex-auto > *": {
+            flex: "0 1 auto",
+          },
+        },
+        ["responsive"]
+      );
+    },
+  ],
   daisyui: {
     themes: false, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
     darkTheme: "light", // name of one of the included themes for dark mode

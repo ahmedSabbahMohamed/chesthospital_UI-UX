@@ -6,7 +6,7 @@ import {
   searchPatientSchema,
 } from "../../../../schemas/searchPatientValidationSchema";
 import SubmitBtn from "../../../../components/form/SubmitBtn";
-import { SearchPatientFormProps } from "../../../../utils/types";
+import { SearchPatientFormProps } from "../../utils/types";
 import { useDispatch } from "react-redux";
 import { setPatientId } from "../../../../redux/slices/patientSlice";
 
