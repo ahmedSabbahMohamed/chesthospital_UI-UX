@@ -10,9 +10,10 @@ const receptionNavLinks = [
   { id: 2, href: "/add-patient", text: "إضافة مريض" },
 ];
 
-const doctorNavLinks = [
+const managerNavLinks = [
   { id: 1, href: "/", text: "Home" },
-  { id: 2, href: "/consultation", text: "Consultation" },
+  { id: 2, href: "/add-employee", text: "Add Employee" },
+  { id: 3, href: "/delete-employee", text: "Delete Employee" },
 ]
 
-export { navLinks, receptionNavLinks, doctorNavLinks };
+export { navLinks, receptionNavLinks, managerNavLinks };
