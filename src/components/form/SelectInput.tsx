@@ -9,7 +9,9 @@ const SelectInput: React.FC<SelectInputProps> = ({
   options,
   isMulti = true,
 }) => {
-  const { values, setFieldValue } = useFormikContext<Record<string, any>>();
+  const { values, setFieldValue, errors, touched, setFieldTouched } = useFormikContext<Record<string, any>>();
+
+  const hasError = errors[name] && touched[name];
 
   const finalOptions = useMemo(() => {
     return options.map((option) => ({
@@ -46,6 +48,10 @@ const SelectInput: React.FC<SelectInputProps> = ({
     }
   };
 
+  const handleBlur = () => {
+    setFieldTouched(name);
+  }
+
   const selectedValue = useMemo(() => {
     if (isMulti) {
       return finalOptions.filter((option) =>
@@ -61,14 +67,18 @@ const SelectInput: React.FC<SelectInputProps> = ({
   return (
     <div className="w-full flex items-center justify-center">
       <div className="w-full max-w-xs">
-        <label htmlFor={name} className={`block mb-2 ${"text-semiDark"}`}>
-          {label}
+        <label
+          htmlFor={name}
+          className={`block mb-3 ${hasError ? "text-error" : "text-semiDark"}`}
+        >
+          {hasError ? errors[name]?.toString() : label}
         </label>
         <ReactSelect
           className="w-full max-w-xs"
           options={finalOptions}
           name={name}
           onChange={handleChange}
+          onBlur={handleBlur}
           isMulti={isMulti}
           isClearable
           isSearchable
