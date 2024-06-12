@@ -29,7 +29,7 @@ const MedicineRequest: React.FC<idProps> = ({ id }) => {
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     const requestValues = {
-      ...values,
+      medicine: values.medicine,
       patientId: parseInt(patientId),
       doctorId: parseInt(doctorId),
     };
@@ -63,7 +63,7 @@ const MedicineRequest: React.FC<idProps> = ({ id }) => {
           useEffect(() => {
             setMedicine(values?.medicine);
           }, [values.medicine]);
-          console.log(values);
+          // console.log(values);
           return (
             <Form className="flex flex-equal gap-2 items-center justify-center flex-col">
               <SelectInput
