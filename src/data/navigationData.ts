@@ -19,6 +19,7 @@ const managerNavLinks = [
 const pharmacistNavLinks = [
   { id: 1, href: "/", text: "Home" },
   { id: 2, href: "/delete-medicine", text: "Delelte Medicine" },
+  { id: 3, href: "/requests", text: "Requests" },
 ];
 
 export { navLinks, receptionNavLinks, managerNavLinks, pharmacistNavLinks };
