@@ -14,6 +14,11 @@ const managerNavLinks = [
   { id: 1, href: "/", text: "Home" },
   { id: 2, href: "/add-employee", text: "Add Employee" },
   { id: 3, href: "/delete-employee", text: "Delete Employee" },
-]
+];
 
-export { navLinks, receptionNavLinks, managerNavLinks };
+const pharmacistNavLinks = [
+  { id: 1, href: "/", text: "Home" },
+  { id: 2, href: "/delete-medicine", text: "Delelte Medicine" },
+];
+
+export { navLinks, receptionNavLinks, managerNavLinks, pharmacistNavLinks };
