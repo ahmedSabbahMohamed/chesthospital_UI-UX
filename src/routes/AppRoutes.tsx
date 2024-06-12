@@ -4,6 +4,7 @@ import DoctorRoutes from './DoctorRoutes';
 import ReceptionRoutes from './ReceptionRoutes';
 import PublicRoutes from './PublicRoutes';
 import ManagerRoutes from './ManagerRoutes';
+import PharmacistRoutes from './PharmacistRoutes';
 
 const AppRoutes: React.FC = () => {
   const [specialization, setSpecialization] = useState<string | null>(null);
@@ -26,6 +27,9 @@ const AppRoutes: React.FC = () => {
       </Case>
       <Case condition={specialization === "MANAGER"}>
         <ManagerRoutes />
+      </Case>
+      <Case condition={specialization === "PHARMACY"}>
+        <PharmacistRoutes />
       </Case>
     </Switch>
   );
