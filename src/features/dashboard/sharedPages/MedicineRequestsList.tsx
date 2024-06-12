@@ -2,6 +2,7 @@ import React from "react";
 import {
   useDeleteMedicineRequest,
   useGetMedicineRequests,
+  useGetMedicines,
 } from "./services/sharedQueries";
 import { getErrorWithResponse } from "../../../utils/apiError";
 import { Case, Default, Switch } from "react-if";
@@ -9,7 +10,10 @@ import Loading from "../../../components/ui/Loading";
 
 const MedicineRequestsList: React.FC = () => {
   const { data, error, isLoading } = useGetMedicineRequests();
+  const { data: medicinesList } = useGetMedicines();
   const { mutateAsync } = useDeleteMedicineRequest();
+
+  // console.log(medicinesList);
 
   const handleDeleteMedicineRequest = async (id: string) => {
     try {
@@ -40,33 +44,52 @@ const MedicineRequestsList: React.FC = () => {
           </Case>
           <Case condition={data?.data?.data?.length > 0}>
             <div className="overflow-x-auto">
-              <table className="table">
-                <thead>
+              <table className="table bg-white overflow-hidden">
+                <thead className="bg-dark text-white">
                   <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Job</th>
-                    <th>Favorite Color</th>
+                    <th>ID</th>
+                    <th>Patient ID</th>
+                    <th>Medicne</th>
+                    <th>Options</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.data?.data.map((request: any, index: number) => (
-                    <tr>
-                      <th>{index + 1}</th>
-                      <td>{request.id}</td>
-                      <td>{request.medicine}</td>
-                      <td>
-                        <button
-                          onClick={() =>
-                            handleDeleteMedicineRequest(request.id)
-                          }
-                          className="rounded bg-error text-white font-bold"
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  {data?.data?.data.map((request: any, index: number) => {
+                    const medicines = [...request.medicine];
+                    console.log(medicines);
+                    return (
+                      <tr key={index}>
+                        <th>{index + 1}</th>
+                        <td>{request.patientId}</td>
+                        <td className="flex flex-row flex-wrap gap-2">
+                          {medicines.map((medicine, index) => {
+                            return (
+                              <span
+                                key={index}
+                                className="bg-light py-1 px-2 rounded"
+                              >
+                                {
+                                  medicinesList?.data?.data.find(
+                                    (med: any) => med.id === medicine
+                                  ).name
+                                }
+                              </span>
+                            );
+                          })}
+                        </td>
+                        <td>
+                          <button
+                            onClick={() =>
+                              handleDeleteMedicineRequest(request.id)
+                            }
+                            className="rounded bg-error text-white font-bold py-2 px-4"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
