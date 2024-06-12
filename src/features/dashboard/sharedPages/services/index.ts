@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_API = `http://localhost:5000/api/requests`;
+const BASE_API = `http://localhost:5000/api/shared`;
 
 const getToken = () => {
   const token = localStorage.getItem("token");

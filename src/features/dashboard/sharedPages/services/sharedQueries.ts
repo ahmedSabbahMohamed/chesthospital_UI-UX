@@ -27,4 +27,11 @@ const useDeleteMedicineRequest = () => {
   });
 };
 
-export { useGetMedicineRequests, useDeleteMedicineRequest };
+const useGetMedicines = () => {
+  return useQuery({
+    queryKey: ["medicines"],
+    queryFn: SERVICES.getMedicines,
+  });
+};
+
+export { useGetMedicineRequests, useDeleteMedicineRequest, useGetMedicines };

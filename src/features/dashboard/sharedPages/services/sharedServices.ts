@@ -9,4 +9,8 @@ const deleteMedicineRequest = (id: string) => {
   return API.delete(SHARED_ENDPOINTS.DELETE_MEDICINE_REQUEST(id));
 };
 
-export { getMedicineRequests, deleteMedicineRequest };
+const getMedicines = () => {
+  return API.get(SHARED_ENDPOINTS.GET_MEDICINES);
+};
+
+export { getMedicineRequests, deleteMedicineRequest, getMedicines };
