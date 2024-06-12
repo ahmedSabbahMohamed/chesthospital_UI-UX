@@ -42,30 +42,33 @@ Ensure you have the following installed:
   yarn install
   # or
   npm install
+  ```
 3. Start the development server:
-```sh
-yarn run dev
-# or
-npm run dev
-```
+  ```sh
+  yarn run dev
+  # or
+  npm run dev
+  ```
 
-### Building for Production
-#### To build the project for production, run:
-```sh
-yarn build
-# or
-npm run build
-```
+## Building for Production
+### To build the project for production, run:
+  ```sh
+  yarn build
+  # or
+  npm run build
+  ```
 
-### Linting
-#### To run ESLint, run:
-```sh
-yarn lint
-# or
-npm run lint
-```
+## Linting
+### To run ESLint, run:
+  ```sh
+  yarn lint
+  # or
+  npm run lint
+  ```
 
-### Project Structure
+## Project Structure
+
+```
 chesthospital/
 ├── languages/
 │   ├── ar.json
@@ -96,9 +99,9 @@ chesthospital/
 ├── tailwind.config.js      # Tailwind CSS configuration
 ├── tsconfig.json           # TypeScript configuration
 └── vite.config.ts          # Vite configuration
+```
 
-
-### Contributing
+## Contributing
 We welcome contributions from the community! If you'd like to contribute, please follow these steps:
 
   1. Fork the repository
@@ -107,7 +110,7 @@ We welcome contributions from the community! If you'd like to contribute, please
   4. Push to the branch (git push origin feature/YourFeature)
   5. Open a pull request
 
-### Contact
+## Contact
 
 For any inquiries or issues, please contact the project maintainer:
 
