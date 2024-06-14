@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import SearchPatientForm from "../components/form/SearchPatientForm";
 import { Case, Switch } from "react-if";
 import Loading from "../../../components/ui/Loading";
-import { useGetReports } from "../doctor/services/doctorQueries";
 import { getErrorWithResponse } from "../../../utils/apiError"
 import MedicalRecord from "../components/ui/MedicalRecord";
 import Modal from "../components/ui/Modal";
@@ -14,6 +13,7 @@ import {
   OxygenRequest,
   RadiologyRequest,
 } from "../index";
+import { useGetPatient } from "./services/sharedQueries";
 
 const REQUESTS_CONFIG = [
   {
@@ -56,7 +56,7 @@ const REQUESTS_CONFIG = [
 
 const SearchPatientPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const { data, refetch, error, isLoading } = useGetReports();
+  const { data, refetch, error, isLoading } = useGetPatient();
 
   const handleSubmit = async () => {
     setLoading(true);
