@@ -13,8 +13,6 @@ const MedicineRequestsList: React.FC = () => {
   const { data: medicinesList } = useGetMedicines();
   const { mutateAsync } = useDeleteMedicineRequest();
 
-  // console.log(medicinesList);
-
   const handleDeleteMedicineRequest = async (id: string) => {
     try {
       await mutateAsync(id);
@@ -42,9 +40,13 @@ const MedicineRequestsList: React.FC = () => {
               Error: {message?.response?.data.message}
             </h3>
           </Case>
-          <Case condition={data?.data?.data?.length > 0}>
+          <Case
+            condition={
+              data?.data?.data?.length > 0 && data?.data?.data !== undefined
+            }
+          >
             <div className="overflow-x-auto">
-              <table className="table bg-white overflow-hidden">
+              <table className="table table-xs sm:table-sm md:table-lg bg-white overflow-hidden">
                 <thead className="bg-dark text-white">
                   <tr>
                     <th>ID</th>
