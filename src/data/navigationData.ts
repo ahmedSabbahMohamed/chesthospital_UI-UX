@@ -18,8 +18,21 @@ const managerNavLinks = [
 
 const pharmacistNavLinks = [
   { id: 1, href: "/", text: "Home" },
-  { id: 2, href: "/delete-medicine", text: "Delelte Medicine" },
-  { id: 3, href: "/requests", text: "Requests" },
+  { id: 2, href: "/add-medicine", text: "Add Medicine" },
+  { id: 3, href: "/delete-medicine", text: "Delelte Medicine" },
 ];
 
-export { navLinks, receptionNavLinks, managerNavLinks, pharmacistNavLinks };
+const nursingAdminNavLinks = [
+  { id: 1, href: "/", text: "Medicine Requests" },
+  { id: 2, href: "/lab-requests", text: "Lab Requests" },
+  { id: 3, href: "/radiology-requests", text: "Radiology Requests" },
+  { id: 4, href: "/oxygen-requests", text: "Oxygen Requests" },
+];
+
+export {
+  navLinks,
+  receptionNavLinks,
+  managerNavLinks,
+  pharmacistNavLinks,
+  nursingAdminNavLinks,
+};
