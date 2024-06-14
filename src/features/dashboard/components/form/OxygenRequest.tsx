@@ -10,8 +10,6 @@ import usePatientId from "../../../../hooks/PatientId";
 import useEmployeeId from "../../../../hooks/EmployeeId";
 import { useOxygenRequest } from "../../doctor/services/doctorQueries";
 import { idProps } from "../../utils/types";
-import { toast } from "react-toastify";
-import { getErrorWithResponse } from "../../../../utils/apiError";
 import Input from "../../../../components/form/Input";
 
 const OxygenRequest: React.FC<idProps> = ({ id }) => {
@@ -40,8 +38,7 @@ const OxygenRequest: React.FC<idProps> = ({ id }) => {
     try {
       await mutation.mutateAsync(requestValues);
     } catch (err) {
-      const error = getErrorWithResponse(err);
-      toast.error(error?.response?.data?.message);
+      console.log(err)
     } finally {
       setSubmitting(false);
     }
