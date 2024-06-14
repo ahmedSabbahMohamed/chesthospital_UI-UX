@@ -24,7 +24,7 @@ const usePostReport = (id: string) => {
     },
     onError: () => {
       (document.getElementById(id) as HTMLDialogElement)?.close();
-      toast.error("something went wrong");
+      toast.error("Failed to send request");
     },
   });
 };
@@ -40,7 +40,7 @@ const useLabRequest = (id: string) => {
     },
     onError: () => {
       (document.getElementById(id) as HTMLDialogElement)?.close();
-      toast.error("something went wrong");
+      toast.error("Failed to send request");
     },
   });
 };
@@ -56,7 +56,7 @@ const useRadiologyRequest = (id: string) => {
     },
     onError: () => {
       (document.getElementById(id) as HTMLDialogElement)?.close();
-      toast.error("some thing went wrong");
+      toast.error("Failed to send request");
     },
   });
 };
@@ -77,9 +77,8 @@ const useMedicineRequest = (id: string) => {
       (document.getElementById(id) as HTMLDialogElement)?.close();
       toast.success("request sent successfully");
     },
-    onError: (error) => {
+    onError: () => {
       (document.getElementById(id) as HTMLDialogElement)?.close();
-      console.log(error);
       toast.error("something went wrong");
     },
   });
@@ -97,7 +96,7 @@ const useOxygenRequest = (id: string) => {
     onError: (error) => {
       const errorWithResponse = getErrorWithResponse(error);
       (document.getElementById(id) as HTMLDialogElement)?.close();
-      toast.error(errorWithResponse?.response?.data?.message);
+      toast.error(errorWithResponse?.response?.data?.message || "Failed  to send request");
     },
   });
 };
@@ -122,7 +121,7 @@ const useConsultationRequest = (id: string) => {
     onError: (err) => {
       const error = getErrorWithResponse(err);
       (document.getElementById(id) as HTMLDialogElement)?.close();
-      toast.error(error?.response?.data?.message);
+      toast.error(error?.response?.data?.message || "Failed to send request");
     },
   });
 };
