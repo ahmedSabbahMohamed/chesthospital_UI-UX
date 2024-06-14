@@ -11,9 +11,9 @@ const PharmacistRoutes: React.FC = () => {
       path: "",
       element: <Pharmacist />,
       children: [
-        { index: true, element: <AddMedicine /> },
+        { index: true, element: <MedicineRequestsList /> },
+        { path: "add-medicine", element: <AddMedicine /> },
         { path: "delete-medicine", element: <DeleteMedicine /> },
-        { path: "requests", element: <MedicineRequestsList /> },
       ],
     },
   ];
