@@ -29,10 +29,16 @@ const nursingAdminNavLinks = [
   { id: 4, href: "/oxygen-requests", text: "Oxygen Requests" },
 ];
 
+const labAdminNavLinks = [
+  { id: 1, href: "/", text: "Lab Requests" },
+  { id: 2, href: "/upload-result", text: "Upload Lab Result" },
+];
+
 export {
   navLinks,
   receptionNavLinks,
   managerNavLinks,
   pharmacistNavLinks,
   nursingAdminNavLinks,
+  labAdminNavLinks,
 };
