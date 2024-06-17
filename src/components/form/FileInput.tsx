@@ -16,9 +16,9 @@ const FileInput: React.FC = () => {
     open();
   }, [open]);
 
-  // const handleDeleteFile = useCallback((fileToDelete: File) => {
-  //   setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToDelete));
-  // }, []);
+  const handleDeleteFile = useCallback((fileToDelete: File) => {
+    setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToDelete));
+  }, []);
 
   return (
     <section className="container mx-auto">
@@ -37,6 +37,7 @@ const FileInput: React.FC = () => {
                     src={URL.createObjectURL(file)}
                     alt={file.name}
                   />
+                  <button className="btn btn-error" onClick={() => handleDeleteFile}>delete</button>
                 </div>
               ))}
             </Case>
