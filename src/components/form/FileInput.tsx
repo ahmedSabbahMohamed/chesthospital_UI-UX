@@ -16,9 +16,9 @@ const FileInput: React.FC = () => {
     open();
   }, [open]);
 
-  const handleDeleteFile = useCallback((fileToDelete: File) => {
-    setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToDelete));
-  }, []);
+  // const handleDeleteFile = useCallback((fileToDelete: File) => {
+  //   setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToDelete));
+  // }, []);
 
   return (
     <section className="container mx-auto">
