@@ -1,14 +1,19 @@
-import React from 'react'
-import { Case, Default, Switch } from 'react-if';
-import Loading from '../../../components/ui/Loading';
-import { useDeleteRadiologyRequest, useGetRadiologyRequests } from './services/sharedQueries';
-import { getErrorWithResponse } from '../../../utils/apiError';
+import React from "react";
+import { Case, Default, Switch } from "react-if";
+import Loading from "../../../components/ui/Loading";
+import {
+  useDeleteRadiologyRequest,
+  useGetRadiologyRequests,
+} from "./services/sharedQueries";
+import { getErrorWithResponse } from "../../../utils/apiError";
+import { RadiologyRequestRowProps } from "./utils/types";
+import Table from "./components/ui/Table";
+import Error from "./components/ui/Error";
 
 const RadiologyRequests: React.FC = () => {
 
-  const { data, error, isLoading} = useGetRadiologyRequests();
+  const { data, error, isLoading } = useGetRadiologyRequests();
   const { mutateAsync } = useDeleteRadiologyRequest();
-  const message = getErrorWithResponse(error);
   const handleDeleteRadiologyRequest = async (id: string) => {
     try {
       await mutateAsync(id);
@@ -16,8 +21,26 @@ const RadiologyRequests: React.FC = () => {
       console.log(err);
     }
   };
+  const message = getErrorWithResponse(error)?.response?.data.message;
 
-  console.log(data?.data.data)
+  const RadiologyRequestRow: React.FC<RadiologyRequestRowProps> = ({ index, request, onDelete }) => {
+    return (
+      <tr key={index}>
+        <td>{index + 1}</td>
+        <td>{request.patientId}</td>
+        <td>{request.name}</td>
+        <td>{request.description}</td>
+        <td>
+          <button
+            onClick={() => onDelete(request.id)}
+            className="rounded bg-error text-white font-bold py-2 px-4"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    );
+  };
 
   return (
     <div>
@@ -26,16 +49,11 @@ const RadiologyRequests: React.FC = () => {
       </h2>
       <div className="mb-3">
         <Switch>
-          <Default>
-            <h3 className="text-error text-center">No Requests</h3>
-          </Default>
           <Case condition={isLoading}>
             <Loading />
           </Case>
           <Case condition={error !== undefined && error !== null}>
-            <h3 className="text-error text-center">
-              Error: {message?.response?.data.message}
-            </h3>
+            <Error message={message || "An error occurred"} />
           </Case>
           <Case
             condition={
@@ -43,50 +61,28 @@ const RadiologyRequests: React.FC = () => {
               data?.data?.data !== undefined
             }
           >
-            <div className="overflow-x-auto px-2">
-              <table className="table table-xs sm:table-sm md:table-lg bg-white overflow-hidden">
-                <thead className="bg-dark text-white">
-                  <tr>
-                    <th>ID</th>
-                    <th>Patient ID</th>
-                    <th>Radiology Name</th>
-                    <th>Radiology Description</th>
-                    <th>Options</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data?.data?.data.radiologyRequests.map(
-                    (request: any, index: number) => {
-                      return (
-                        <tr key={index}>
-                          <th>{index + 1}</th>
-                          <td>{request.patientId}</td>
-                          <td className="flex flex-row flex-wrap gap-2">
-                            {request.name}
-                          </td>
-                          <td>{request.description}</td>
-                          <td>
-                            <button
-                              onClick={() =>
-                                handleDeleteRadiologyRequest(request.id)
-                              }
-                              className="rounded bg-error text-white font-bold py-2 px-4"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    }
-                  )}
-                </tbody>
-              </table>
-            </div>
+            <Table
+              headers={["ID", "Patient ID", "Name", "Description", "Options"]}
+            >
+              {data?.data?.data.radiologyRequests.map(
+                (request: any, index: number) => (
+                  <RadiologyRequestRow
+                    key={index}
+                    request={request}
+                    index={index}
+                    onDelete={handleDeleteRadiologyRequest}
+                  />
+                )
+              )}
+            </Table>
           </Case>
+          <Default>
+            <h3 className="text-error text-center">No Requests</h3>
+          </Default>
         </Switch>
       </div>
     </div>
   );
-}
+};
 
-export default RadiologyRequests
+export default RadiologyRequests;
