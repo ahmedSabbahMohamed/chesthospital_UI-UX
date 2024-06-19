@@ -2,11 +2,12 @@ import React from "react";
 import { MedicalRecordProps } from "../../utils/types";
 import { Case, Default, Switch } from "react-if";
 import noData from "../../../../assets/images/no-data.gif";
+import { IoMdEye } from "react-icons/io";
 
 const MedicalRecord: React.FC<MedicalRecordProps> = ({
   patientName,
   reports,
-  // labs,
+  labs,
   radiologies,
 }) => {
   const showAllReports = (key: string, value: string) => {
@@ -15,6 +16,37 @@ const MedicalRecord: React.FC<MedicalRecordProps> = ({
         <span className="inline-block text-semiDark font-bold">{key}</span>
         <span>{value}</span>
       </div>
+    );
+  };
+
+  const PreviewResult = ({
+    file,
+    modalId,
+  }: {
+    file: string;
+    modalId: string;
+  }) => {
+    return (
+      <>
+        <button
+          className="bg-primary w-6 h-6 flex items-center justify-center rounded-full text-white"
+          onClick={() =>
+            (document.getElementById(modalId) as HTMLDialogElement)?.showModal()
+          }
+        >
+          <IoMdEye />
+        </button>
+        <dialog id={modalId} className="modal">
+          <div className="modal-box rounded-lg p-0 flex items-center justify-center">
+            <form method="dialog">
+              <button className="text-2xl text-white bg-slate-400 btn btn-circle absolute right-2 top-2">
+                ✕
+              </button>
+            </form>
+            <img className="w-full h-auto rounded-lg" src={file} />
+          </div>
+        </dialog>
+      </>
     );
   };
 
@@ -83,9 +115,52 @@ const MedicalRecord: React.FC<MedicalRecordProps> = ({
           role="tabpanel"
           className="tab-content bg-base-100 border-base-300 rounded-box p-6 shadow-md"
         >
-          <div className="flex">
+          <div className="flex flex-row flex-wrap gap-2">
             <Switch>
-              {/* <Case condition={labs.length > 0}>{labs?.map((lab) => "")}</Case> */}
+              <Case condition={labs.length > 0}>
+                {labs?.map(
+                  (lab: {
+                    id: number;
+                    name: string;
+                    createdAt: string;
+                    result: [];
+                  }) => {
+                    return (
+                      <div
+                        key={lab.id}
+                        className="border border-slate-200 w-full max-w-xs rounded-lg p-2 flex gap-2 flex-col bg-slate-50"
+                      >
+                        <h3 className="text-primary">{lab.name}</h3>
+                        <div className="border-2 border-dashed border-primary rounded-md p-2 flex flex-wrap flow-row gap-3">
+                          {lab?.result?.map((result, index) => {
+                            return (
+                              <div
+                                key={index}
+                                className="w-24 h-32 rounded-lg shadow-lg bg-white"
+                              >
+                                <img
+                                  className="w-full h-24 rounded-lg"
+                                  src={`https://chesthospital-backend.onrender.com/uploads/${result}`}
+                                  alt={result}
+                                />
+                                <div className="flex items-center justify-center mt-1">
+                                  <PreviewResult
+                                    file={`https://chesthospital-backend.onrender.com/uploads/${result}`}
+                                    modalId={result}
+                                  />
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <span className="text-slate-500 text-xs">
+                          {lab.createdAt}
+                        </span>
+                      </div>
+                    );
+                  }
+                )}
+              </Case>
               {noDataAvailable}
             </Switch>
           </div>
@@ -104,7 +179,6 @@ const MedicalRecord: React.FC<MedicalRecordProps> = ({
           <Switch>
             <Case condition={radiologies.length > 0}>
               {/* {radiologies.map((radiology) => "")} */}
-
             </Case>
             {noDataAvailable}
           </Switch>
