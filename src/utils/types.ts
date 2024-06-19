@@ -7,22 +7,22 @@ type DoctorCardProps = {
 };
 
 type doc = {
-    id: number;
-    img: string;
-    name: string;
-    speciality: string;
-}
+  id: number;
+  img: string;
+  name: string;
+  speciality: string;
+};
 
 type TitleProps = {
-    firstHalf: string;
-    secondHalf: string;
-}
+  firstHalf: string;
+  secondHalf: string;
+};
 
 type ServiceCardProps = {
   img: string;
   title: string;
   desc: string;
-}
+};
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -33,11 +33,11 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 type SubmitBtnProps = {
   BtnTxt: string;
   disabled: boolean;
-}
+};
 
 type FormContainerProps = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 type patientInfoProps = {
   loading: boolean;
@@ -45,25 +45,28 @@ type patientInfoProps = {
   data: any;
   results: React.ReactNode;
   notFound: React.ReactNode;
-}
+};
 
 type OptionType = {
   name: string;
   id: string | number;
-}
+};
 
 type SelectInputProps = {
   label: string;
   name: string;
   options: OptionType[];
   isMulti?: boolean;
-}
+};
 
 type LoginFormValues = {
   email: string;
   password: string;
-}
+};
 
+type FileInputProps = {
+  name: string;
+};
 
 export type {
   DoctorCardProps,
@@ -77,4 +80,5 @@ export type {
   OptionType,
   SelectInputProps,
   LoginFormValues,
+  FileInputProps,
 };
