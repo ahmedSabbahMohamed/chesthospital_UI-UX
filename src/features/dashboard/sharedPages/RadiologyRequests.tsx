@@ -11,19 +11,23 @@ import Table from "./components/ui/Table";
 import Error from "./components/ui/Error";
 
 const RadiologyRequests: React.FC = () => {
-
-  const { data, error, isLoading } = useGetRadiologyRequests();
-  const { mutateAsync } = useDeleteRadiologyRequest();
+  const { data, error, isLoading, refetch } = useGetRadiologyRequests();
+  const { mutateAsync, isPending } = useDeleteRadiologyRequest();
   const handleDeleteRadiologyRequest = async (id: string) => {
     try {
       await mutateAsync(id);
+      await refetch();
     } catch (err) {
       console.log(err);
     }
   };
   const message = getErrorWithResponse(error)?.response?.data.message;
 
-  const RadiologyRequestRow: React.FC<RadiologyRequestRowProps> = ({ index, request, onDelete }) => {
+  const RadiologyRequestRow: React.FC<RadiologyRequestRowProps> = ({
+    index,
+    request,
+    onDelete,
+  }) => {
     return (
       <tr key={index}>
         <td>{index + 1}</td>
@@ -33,7 +37,9 @@ const RadiologyRequests: React.FC = () => {
         <td>
           <button
             onClick={() => onDelete(request.id)}
-            className="rounded bg-error text-white font-bold py-2 px-4"
+            className={`rounded bg-error text-white font-bold py-2 px-4 ${
+              isPending ? "cursor-not-allowed" : ""
+            }`}
           >
             Delete
           </button>

@@ -12,13 +12,13 @@ import Error from "./components/ui/Error";
 import Table from "./components/ui/Table";
 
 const MedicineRequestsList: React.FC = () => {
-  
-  const { data, error, isLoading } = useGetMedicineRequests();
+  const { data, error, isLoading, refetch } = useGetMedicineRequests();
   const { data: medicinesList } = useGetMedicines();
-  const { mutateAsync } = useDeleteMedicineRequest();
+  const { mutateAsync, isPending } = useDeleteMedicineRequest();
   const handleDeleteMedicineRequest = async (id: string) => {
     try {
       await mutateAsync(id);
+      await refetch();
     } catch (err) {
       console.log(err);
     }
@@ -51,7 +51,9 @@ const MedicineRequestsList: React.FC = () => {
         <td>
           <button
             onClick={() => onDelete(request.id)}
-            className="rounded bg-error text-white font-bold py-2 px-4"
+            className={`rounded bg-error text-white font-bold py-2 px-4 ${
+              isPending ? "cursor-not-allowed" : ""
+            }`}
           >
             Delete
           </button>
