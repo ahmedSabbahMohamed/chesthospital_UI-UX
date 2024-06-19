@@ -1,9 +1,19 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import { Case, Default, Switch } from "react-if";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { IoMdEye } from "react-icons/io";
+import { useField, useFormikContext } from "formik";
+import { FileInputProps } from "../../utils/types";
 
-const FileInput: React.FC = () => {
-  const [files, setFiles] = useState<File[]>([]);
+const FileInput: React.FC<FileInputProps> = ({ name }) => {
+  const { setFieldValue, touched, errors } = useFormikContext<any>();
+  const [field] = useField(name);
+  const [files, setFiles] = useState<File[]>(field.value || []);
+
+  useEffect(() => {
+    setFieldValue(name, files);
+  }, [files, setFieldValue, name]);
+
   const { getRootProps, getInputProps, open } = useDropzone({
     noClick: true,
     noKeyboard: true,
@@ -20,45 +30,88 @@ const FileInput: React.FC = () => {
     setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToDelete));
   }, []);
 
+  const PreviewFile = ({ file, modalId }: { file: File; modalId: string }) => {
+    return (
+      <>
+        <button
+          className="bg-primary w-6 h-6 flex items-center justify-center rounded-full text-white"
+          onClick={() =>
+            (document.getElementById(modalId) as HTMLDialogElement)?.showModal()
+          }
+        >
+          <IoMdEye />
+        </button>
+        <dialog id={modalId} className="modal">
+          <div className="modal-box rounded-lg p-0 flex items-center justify-center">
+            <form method="dialog">
+              <button className="text-2xl text-white bg-slate-400 btn btn-circle absolute right-2 top-2">
+                ✕
+              </button>
+            </form>
+            <img
+              className="w-full h-auto rounded-lg"
+              src={URL.createObjectURL(file)}
+            />
+          </div>
+        </dialog>
+      </>
+    );
+  };
+
+  const DeleteFile = ({ file }: { file: File }) => {
+    return (
+      <button
+        className="bg-error text-white w-6 h-6 rounded-full flex items-center justify-center"
+        onClick={() => handleDeleteFile(file)}
+      >
+        <RiDeleteBin6Line />
+      </button>
+    );
+  };
+
+  const hasError = errors[name] && touched[name];
+
   return (
     <section className="container mx-auto">
       <div {...getRootProps({ className: "dropzone" })}>
-        <input {...getInputProps()} />
-        <div className="flex items-center justify-start flex-row flex-wrap gap-2 border-2 border-dashed border-primary rounded-md p-2 w-full max-w-xs">
-          <Switch>
-            <Case condition={files.length > 0}>
-              {files.map((file) => (
-                <div
-                  key={file.name}
-                  className="w-28 h-28 rounded-lg p-2 cursor-pointer"
-                >
-                  <img
-                    className="w-full h-auto rounded-lg after:bg-red-500 relative after:absolute after:top-0 after:left-0 after:z-50"
-                    src={URL.createObjectURL(file)}
-                    alt={file.name}
-                  />
-                  <button className="btn btn-error" onClick={() => handleDeleteFile}>delete</button>
-                </div>
-              ))}
-            </Case>
-            <Default>
-              <p>Please drop or select files from your local machine:</p>
-            </Default>
-          </Switch>
+        <label
+          htmlFor={name}
+          className={`block mb-2 ${hasError ? "text-error" : "text-semiDark"}`}
+        >
+          {hasError ? errors[name]?.toString() : "Upload File:"}
+        </label>
+        <input name={name} {...getInputProps()} />
+        <div className="flex items-center justify-start flex-row flex-wrap gap-2 border-2 border-dashed border-primary rounded-md p-2 w-full max-w-xs overflow-x-auto">
+          {files.map((file, index) => (
+            <div
+              key={file.name}
+              className={`w-24 h-32 rounded-lg shadow-lg bg-white`}
+            >
+              <img
+                className="w-full h-24 rounded-lg"
+                src={URL.createObjectURL(file)}
+                alt={file.name}
+              />
+              <div className="flex flex-row justify-center items-center gap-1 mt-1">
+                <DeleteFile file={file} />
+                <PreviewFile file={file} modalId={index.toString()} />
+              </div>
+            </div>
+          ))}
+
+          <div className="w-24 h-32 bg-white rounded-lg shadow-md flex place-content-center border-2 border-slate-400 border-dashed">
+            <button
+              type="button"
+              onClick={handleAddFiles}
+              className="text-2xl w-full h-full"
+            >
+              +
+            </button>
+          </div>
         </div>
       </div>
-      <aside className="mt-4">
-        <button
-          type="button"
-          onClick={handleAddFiles}
-          className="px-4 py-2 bg-primary text-white rounded-md"
-        >
-          Add More Files
-        </button>
-      </aside>
     </section>
   );
 };
 
 export default FileInput;
-
