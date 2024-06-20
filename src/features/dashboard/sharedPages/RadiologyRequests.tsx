@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Case, Default, Switch } from "react-if";
 import Loading from "../../../components/ui/Loading";
 import {
@@ -12,13 +12,18 @@ import Error from "./components/ui/Error";
 
 const RadiologyRequests: React.FC = () => {
   const { data, error, isLoading, refetch } = useGetRadiologyRequests();
-  const { mutateAsync, isPending } = useDeleteRadiologyRequest();
+  const { mutateAsync } = useDeleteRadiologyRequest();
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
   const handleDeleteRadiologyRequest = async (id: string) => {
+    setDeletingId(id);
     try {
       await mutateAsync(id);
       await refetch();
     } catch (err) {
       console.log(err);
+    } finally {
+      setDeletingId(null);
     }
   };
   const message = getErrorWithResponse(error)?.response?.data.message;
@@ -28,6 +33,8 @@ const RadiologyRequests: React.FC = () => {
     request,
     onDelete,
   }) => {
+    const isDeleting = deletingId === request.id;
+
     return (
       <tr key={index}>
         <td>{index + 1}</td>
@@ -37,8 +44,9 @@ const RadiologyRequests: React.FC = () => {
         <td>
           <button
             onClick={() => onDelete(request.id)}
+            disabled={isDeleting}
             className={`rounded bg-error text-white font-bold py-2 px-4 ${
-              isPending ? "cursor-not-allowed" : ""
+              isDeleting ? "cursor-not-allowed" : ""
             }`}
           >
             Delete

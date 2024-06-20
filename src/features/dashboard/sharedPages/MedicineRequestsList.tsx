@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   useDeleteMedicineRequest,
   useGetMedicineRequests,
@@ -14,13 +14,18 @@ import Table from "./components/ui/Table";
 const MedicineRequestsList: React.FC = () => {
   const { data, error, isLoading, refetch } = useGetMedicineRequests();
   const { data: medicinesList } = useGetMedicines();
-  const { mutateAsync, isPending } = useDeleteMedicineRequest();
+  const { mutateAsync } = useDeleteMedicineRequest();
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
   const handleDeleteMedicineRequest = async (id: string) => {
+    setDeletingId(id);
     try {
       await mutateAsync(id);
       await refetch();
     } catch (err) {
       console.log(err);
+    } finally {
+      setDeletingId(null);
     }
   };
   const message = getErrorWithResponse(error)?.response?.data.message;
@@ -32,6 +37,8 @@ const MedicineRequestsList: React.FC = () => {
     onDelete,
   }) => {
     const medicines = [...request.medicine];
+    const isDeleting = deletingId === request.id;
+
     return (
       <tr key={index}>
         <th>{index + 1}</th>
@@ -51,8 +58,9 @@ const MedicineRequestsList: React.FC = () => {
         <td>
           <button
             onClick={() => onDelete(request.id)}
+            disabled={isDeleting}
             className={`rounded bg-error text-white font-bold py-2 px-4 ${
-              isPending ? "cursor-not-allowed" : ""
+              isDeleting ? "cursor-not-allowed" : ""
             }`}
           >
             Delete

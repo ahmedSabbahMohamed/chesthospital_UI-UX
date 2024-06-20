@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Case, Default, Switch } from "react-if";
 import Loading from "../../../components/ui/Loading";
 import {
@@ -12,14 +12,18 @@ import Error from "./components/ui/Error";
 
 const LabRequests: React.FC = () => {
   const { data, error, isLoading, refetch } = useGetLabRequests();
-  const { mutateAsync, isPending } = useDeleteLabRequest();
+  const { mutateAsync } = useDeleteLabRequest();
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const handleDeleteLabRequest = async (id: string) => {
+    setDeletingId(id);
     try {
       await mutateAsync(id);
       await refetch();
     } catch (err) {
       console.log(err);
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -30,6 +34,8 @@ const LabRequests: React.FC = () => {
     request,
     onDelete,
   }) => {
+    const isDeleting = deletingId === request.id;
+
     return (
       <tr key={index}>
         <td>{index + 1}</td>
@@ -39,7 +45,10 @@ const LabRequests: React.FC = () => {
         <td>
           <button
             onClick={() => onDelete(request.id)}
-            className={`rounded bg-error text-white font-bold py-2 px-4 ${isPending? "cursor-not-allowed": ""}`}
+            disabled={isDeleting}
+            className={`rounded bg-error text-white font-bold py-2 px-4 ${
+              isDeleting ? "cursor-not-allowed" : ""
+            }`}
           >
             Delete
           </button>

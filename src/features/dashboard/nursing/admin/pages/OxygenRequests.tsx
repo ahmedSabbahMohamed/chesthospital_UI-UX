@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   useGetOxygenRequests,
   useDeleteOxygenRequest,
@@ -11,19 +11,31 @@ import { OxygenRequestRowProps } from "../../utils/types";
 import Table from "../../../sharedPages/components/ui/Table";
 
 const OxygenRequests: React.FC = () => {
-
-  const { data, error, isLoading } = useGetOxygenRequests();
+  const { data, error, isLoading, refetch } = useGetOxygenRequests();
   const { mutateAsync } = useDeleteOxygenRequest();
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
   const handleDelelteOxygenRequest = async (id: string) => {
+    setDeletingId(id);
     try {
       await mutateAsync(id);
+      await refetch();
     } catch (err) {
       console.log(err);
+    } finally {
+      setDeletingId(null);
     }
   };
+  
   const message = getErrorWithResponse(error)?.response?.data.message;
 
-  const OxygenRequestRow: React.FC<OxygenRequestRowProps> = ({ index, request, onDelete }) => {
+  const OxygenRequestRow: React.FC<OxygenRequestRowProps> = ({
+    index,
+    request,
+    onDelete,
+  }) => {
+    const isDeleting = deletingId === request.id;
+
     return (
       <tr key={index}>
         <th>{index + 1}</th>
@@ -36,14 +48,17 @@ const OxygenRequests: React.FC = () => {
         <td>
           <button
             onClick={() => onDelete(request.id)}
-            className="rounded bg-error text-white font-bold py-2 px-4"
+            disabled={isDeleting}
+            className={`rounded bg-error text-white font-bold py-2 px-4 ${
+              isDeleting ? "cursor-not-allowed" : ""
+            }`}
           >
             Delete
           </button>
         </td>
       </tr>
     );
-  }
+  };
 
   return (
     <div>
@@ -60,14 +75,14 @@ const OxygenRequests: React.FC = () => {
           </Case>
           <Case condition={data?.data?.data?.requests.length > 0}>
             <Table headers={["ID", "Patient ID", "Oxygen Level", "Options"]}>
-                  {data?.data?.data.requests.map((request: any, index: number) => (
-                    <OxygenRequestRow
-                      key={index}
-                      request={request}
-                      index={index}
-                      onDelete={handleDelelteOxygenRequest}
-                    />
-                  ))}
+              {data?.data?.data.requests.map((request: any, index: number) => (
+                <OxygenRequestRow
+                  key={index}
+                  request={request}
+                  index={index}
+                  onDelete={handleDelelteOxygenRequest}
+                />
+              ))}
             </Table>
           </Case>
           <Default>
