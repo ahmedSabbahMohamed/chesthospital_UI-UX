@@ -17,29 +17,30 @@ const AppRoutes: React.FC = () => {
     }, []);
 
   return (
-    <Switch>
-      <Default>
-        <PublicRoutes />
-      </Default>
-      <Case condition={specialization === "DOCTOR"}>
-        <DoctorRoutes />
-      </Case>
-      <Case condition={specialization === "RECEPTIONIST"}>
-        <ReceptionRoutes />
-      </Case>
-      <Case condition={specialization === "MANAGER"}>
-        <ManagerRoutes />
-      </Case>
-      <Case condition={specialization === "PHARMACY"}>
-        <PharmacistRoutes />
-      </Case>
-      <Case condition={specialization === "NURSE"}>
-        <NursingAdminRoutes />
-      </Case>
-      <Case condition={specialization === "LAB"}>
-        <LabAdminRoutes />
-      </Case>
-    </Switch>
+    // <Switch>
+    //   <Default>
+    //     <PublicRoutes />
+    //   </Default>
+    //   <Case condition={specialization === "DOCTOR"}>
+    //     <DoctorRoutes />
+    //   </Case>
+    //   <Case condition={specialization === "RECEPTIONIST"}>
+    //     <ReceptionRoutes />
+    //   </Case>
+    //   <Case condition={specialization === "MANAGER"}>
+    //     <ManagerRoutes />
+    //   </Case>
+    //   <Case condition={specialization === "PHARMACY"}>
+    //     <PharmacistRoutes />
+    //   </Case>
+    //   <Case condition={specialization === "NURSE"}>
+    //     <NursingAdminRoutes />
+    //   </Case>
+    //   <Case condition={specialization === "LAB"}>
+    //     <LabAdminRoutes />
+    //   </Case>
+    // </Switch>
+    <DoctorRoutes />
   );
 }
 
