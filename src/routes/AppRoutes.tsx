@@ -5,8 +5,8 @@ import React from 'react';
 // import PublicRoutes from './PublicRoutes';
 // import ManagerRoutes from './ManagerRoutes';
 // import PharmacistRoutes from './PharmacistRoutes';
-import NursingAdminRoutes from './NursingAdminRoutes';
-// import LabAdminRoutes from './LabAdminRoutes';
+// import NursingAdminRoutes from './NursingAdminRoutes';
+import ManagerRoutes from './ManagerRoutes';
 
 const AppRoutes: React.FC = () => {
   // const [specialization, setSpecialization] = useState<string | null>(null);
@@ -40,7 +40,7 @@ const AppRoutes: React.FC = () => {
     //     <LabAdminRoutes />
     //   </Case>
     // </Switch>
-    <NursingAdminRoutes />
+    <ManagerRoutes />
   );
 }
 
